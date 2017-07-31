@@ -89,12 +89,11 @@
    #+BEGIN_SRC emacs-lisp
      (use-package ace-window
        :init
-       (progn
-	 (global-set-key [remap other-window] 'ace-window)
-	 (custom-set-faces
-	  '(aw-leading-char-face
-	    ((t (:inherit ace-jump-face-foreground :height 3.0)))))
-	 ))
+       (global-set-key [remap other-window] 'ace-window)
+       (custom-set-faces
+	'(aw-leading-char-face
+	  ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+       )
    #+END_SRC
 
 ** counsel
@@ -107,9 +106,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package swiper
        :config
-       (progn
-	 (ivy-mode 1)
-	 (setq ivy-use-virtual-buffers t))
+       (ivy-mode 1)
+       (setq ivy-use-virtual-buffers t)
        :bind (("\C-s" . swiper)
 	      ("C-c C-r" . ivy-resume)
 	      ("M-x" . counsel-M-x)
@@ -124,10 +122,8 @@
    #+BEGIN_SRC emacs-lisp
      (use-package auto-complete
        :init
-       (progn
-	 (ac-config-default)
-	 (global-auto-complete-mode t)
-	 ))
+       (ac-config-default)
+       (global-auto-complete-mode t))
    #+END_SRC
 
 ** theme
@@ -204,8 +200,7 @@
     #+BEGIN_SRC emacs-lisp
       (use-package flycheck-gometalinter
 	:config
-	(progn
-	  (flycheck-gometalinter-setup))
+	(flycheck-gometalinter-setup)
 	;; skip linting vendor dirs
 	(setq flycheck-gometalinter-vendor t)
 	;; use in test files
