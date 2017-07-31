@@ -23,7 +23,6 @@
   (toggle-scroll-bar -1)
   (blink-cursor-mode 0)
   (fset 'yes-or-no-p 'y-or-n-p)
-  (setq vc-follor-symlinks nil)
 
   ;; highlight current line, except in certain modes
   (global-hl-line-mode t)

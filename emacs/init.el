@@ -1,3 +1,5 @@
+;; Don't bother me about symlinked files in version control.
+(setq vc-follow-symlinks nil)
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
