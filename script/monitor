@@ -6,3 +6,5 @@ RR="144"
 for output in $(xrandr | grep "DisplayPort" | sed -e "s/\(DisplayPort-.\).*/\1/"); do
   xrandr --output "$output" --mode "$RES" -r "$RR"
 done
+
+xcalib -d :0 $HOME/dotfiles/monitor/dell.icc

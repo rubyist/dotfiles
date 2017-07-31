@@ -1,3 +1,0 @@
-#!/bin/sh
-
-xcalib -d :0 $HOME/dotfiles/monitor/dell.icc
