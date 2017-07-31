@@ -57,14 +57,12 @@
 
 ** try
    #+BEGIN_SRC emacs-lisp
-     (use-package try
-       :ensure t)
+     (use-package try)
    #+END_SRC
 
 ** which key
    #+BEGIN_SRC emacs-lisp
      (use-package which-key
-       :ensure t
        :config
        (which-key-mode))
    #+END_SRC
@@ -72,7 +70,6 @@
 ** org mode
    #+BEGIN_SRC emacs-lisp
      (use-package org-bullets
-       :ensure t
        :config
        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
    #+END_SRC
@@ -86,13 +83,11 @@
       (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0./")
       (setq org-reveal-mathjax t)
 
-      (use-package htmilize
-	:ensure t)
+      (use-package htmilize)
     #+END_SRC
 ** ace window
    #+BEGIN_SRC emacs-lisp
      (use-package ace-window
-       :ensure t
        :init
        (progn
 	 (global-set-key [remap other-window] 'ace-window)
@@ -105,15 +100,12 @@
 ** counsel
    counsel is used by the swiper package
    #+BEGIN_SRC emacs-lisp
-     (use-package counsel
-       :ensure t
-       )
+     (use-package counsel)
    #+END_SRC
 
 ** swiper
    #+BEGIN_SRC emacs-lisp
      (use-package swiper
-       :ensure try
        :config
        (progn
 	 (ivy-mode 1)
@@ -131,7 +123,6 @@
 ** auto complete
    #+BEGIN_SRC emacs-lisp
      (use-package auto-complete
-       :ensure t
        :init
        (progn
 	 (ac-config-default)
@@ -142,46 +133,40 @@
 ** theme
    #+BEGIN_SRC emacs-lisp
      (use-package zenburn-theme
-       :ensure t
        :config (load-theme 'zenburn t))
    #+END_SRC
 ** flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
-       :ensure t
        :init
        (global-flycheck-mode t))
    #+END_SRC
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
-       :ensure t
        :init
        (yas-global-mode 1))
    #+END_SRC
 ** direx
    #+BEGIN_SRC emacs-lisp
-     (use-package direx
-       :ensure t)
+     (use-package direx)
    #+END_SRC
 ** popwin
    popwin helps control obnoxious pop up buffer windows. [[https://github.com/m2ym/popwin-el][Page]]
    #+BEGIN_SRC emacs-lisp
      (use-package popwin
-       :ensure t)
-     (setq display-buffer-function 'popwin:display-buffer)
+       :init
+       (setq display-buffer-function 'popwin:display-buffer))
    #+END_SRC
 ** undoo tree
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree
-       :ensure t
        :init
        (global-undo-tree-mode))
    #+END_SRC
 ** magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
-       :ensure t
        :bind (("C-x g" . magit-status)))
    #+END_SRC
 ** go packages
@@ -194,7 +179,6 @@
       (setenv "PATH" (concat (getenv "PATH") ":/home/scott/src/go/bin"))
       (add-to-list 'exec-path "/home/scott/src/go/bin")
       (use-package go-mode
-	:ensure t
 	:config
 	(setq gofmt-command "goimports")
 	(add-hook 'before-save-hook 'gofmt-before-save)
@@ -219,7 +203,6 @@
     Install sublinters with `gometalinter --install`
     #+BEGIN_SRC emacs-lisp
       (use-package flycheck-gometalinter
-	:ensure t
 	:config
 	(progn
 	  (flycheck-gometalinter-setup))
@@ -235,14 +218,12 @@
 *** go-add-tags
     This package adds tags to struct fields. [[https://github.com/syohex/emacs-go-add-tags][Page]]
     #+BEGIN_SRC emacs-lisp
-      (use-package go-add-tags
-	:ensure t)
-    #+END_SRC
+      (use-package go-add-tags)
+      #+END_SRC
 *** go-eldoc
     This package provides documentation for things under the cursor, formatted for emacs. [[https://github.com/syohex/emacs-go-eldoc][Page]]
     #+BEGIN_SRC emacs-lisp
       (use-package go-eldoc
-	:ensure t
 	:diminish eldoc-mode
 	:config (add-hook 'go-mode-hook 'go-eldoc-setup))
     #+END_SRC
@@ -251,15 +232,13 @@
     Depends on direx package.
     Need to install gotags with `go get -u github.com/jstemmer/gotags`
     #+BEGIN_SRC emacs-lisp
-      (use-package go-direx
-	:ensure t)
+      (use-package go-direx)
       (define-key go-mode-map (kbd "C-c C-x") 'go-direx-pop-to-buffer)
       (push '("^\*go-direx:" :regexp t :position left :width 0.4 :dedicated t :stick t)
 	    popwin:special-display-config)
     #+END_SRC
 *** go-guru
     #+BEGIN_SRC emacs-lisp
-      (use-package go-guru
-	:ensure t)	
+      (use-package go-guru)
       (add-hook 'go-mode-hook 'go-guru-hl-identifier-mode)
     #+END_SRC
