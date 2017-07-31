@@ -1,0 +1,61 @@
+[user]
+	name = rubyist
+	email = scott.barron@github.com
+
+[core]
+	legacyheaders = false
+	autocrlf = input
+	excludesfile = /home/scott/.gitignore
+
+[alias]
+	tug = pull --rebase
+	co = checkout
+	st = status
+	ci = commit
+	change = codereview change
+	gofmt = codereview gofmt
+	mail = codereview mail
+	pending = codereview pending
+	submit = codereview submit
+	sync = codereview sync
+
+[apply]
+	whitespace = nowarn
+
+[color]
+	status = auto
+	branch = auto
+	diff = auto
+	ui = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
+[merge]
+	tool = opendiff
+
+[core]
+	legacyheaders = false
+	autocrlf = input
+	editor = /usr/bin/vim
+
+[push]
+	default = simple
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
