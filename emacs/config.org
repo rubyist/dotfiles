@@ -38,6 +38,8 @@
     (add-hook m (lambda () (setq global-hl-line-mode nil))))
 
   (add-hook 'prog-mode-hook 'linum-mode)
+
+  (diminish 'auto-revert-mode)
 #+END_SRC
 
 * set up packages with melpa
