@@ -73,6 +73,7 @@
        :config
        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
    #+END_SRC
+
 *** org reveal
     Build reveal.js presentations in org mode.
     Check out the [[https://github.com/yjwen/org-reveal][org-reveal]] home page
@@ -85,6 +86,7 @@
 
       (use-package htmilize)
     #+END_SRC
+
 ** ace window
    #+BEGIN_SRC emacs-lisp
      (use-package ace-window
@@ -131,22 +133,26 @@
      (use-package zenburn-theme
        :config (load-theme 'zenburn t))
    #+END_SRC
+
 ** flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
        :init
        (global-flycheck-mode t))
    #+END_SRC
+
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
        :init
        (yas-global-mode 1))
    #+END_SRC
+
 ** direx
    #+BEGIN_SRC emacs-lisp
      (use-package direx)
    #+END_SRC
+
 ** popwin
    popwin helps control obnoxious pop up buffer windows. [[https://github.com/m2ym/popwin-el][Page]]
    #+BEGIN_SRC emacs-lisp
@@ -154,21 +160,25 @@
        :init
        (setq display-buffer-function 'popwin:display-buffer))
    #+END_SRC
+
 ** undoo tree
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree
        :init
        (global-undo-tree-mode))
    #+END_SRC
+
 ** magit
    #+BEGIN_SRC emacs-lisp
      (use-package magit
        :bind (("C-x g" . magit-status)))
    #+END_SRC
+
 ** go packages
 *** Packages to look at
     - [[https://github.com/iced/go-gopath][go-gopath]]
     - [[https://github.com/samertm/go-stacktracer.el][go-stacktracer]]
+
 *** go-mode
     Base package for working with Go
     #+BEGIN_SRC emacs-lisp
@@ -189,11 +199,13 @@
 	    (set (make-local-variable 'compile-command)
 		 "gometalinter --deadline 10s && go vet")))
     #+END_SRC
+
 *** auto complete
     #+BEGIN_SRC emacs-lisp
     (require 'go-autocomplete)
     (require 'auto-complete-config)
     #+END_SRC
+
 *** linting
     Install gometalinter with `go get github.com/alecthomas/gometalinter`
     Install sublinters with `gometalinter --install`
@@ -210,11 +222,13 @@
 	;; disable gotype
 	(setq flycheck-gometalinter-disable-linters '("gotype")))
     #+END_SRC
+
 *** go-add-tags
     This package adds tags to struct fields. [[https://github.com/syohex/emacs-go-add-tags][Page]]
     #+BEGIN_SRC emacs-lisp
       (use-package go-add-tags)
       #+END_SRC
+
 *** go-eldoc
     This package provides documentation for things under the cursor, formatted for emacs. [[https://github.com/syohex/emacs-go-eldoc][Page]]
     #+BEGIN_SRC emacs-lisp
@@ -222,6 +236,7 @@
 	:diminish eldoc-mode
 	:config (add-hook 'go-mode-hook 'go-eldoc-setup))
     #+END_SRC
+
 *** go-direx
     This package views go code in a tree style viewer. [[https://github.com/syohex/emacs-go-direx][Page]]
     Depends on direx package.
@@ -232,6 +247,7 @@
       (push '("^\*go-direx:" :regexp t :position left :width 0.4 :dedicated t :stick t)
 	    popwin:special-display-config)
     #+END_SRC
+
 *** go-guru
     #+BEGIN_SRC emacs-lisp
       (use-package go-guru)
