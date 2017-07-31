@@ -1,0 +1,259 @@
+#STARTUP: overview
+
+* load path
+  #+BEGIN_SRC emacs-lisp
+    (add-to-list 'load-path "~/.emacs.d/local/")
+  #+END_SRC
+* aliases
+#+BEGIN_SRC emacs-lisp
+  (defalias 'list-buffer 'ibuffer)
+#+END_SRC
+
+* keybindings
+#+BEGIN_SRC emacs-lisp
+  (windmove-default-keybindings)
+  (global-unset-key (kbd "C-z"))
+#+END_SRC
+
+* interface tweaks
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (toggle-scroll-bar -1)
+  (blink-cursor-mode 0)
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+  ;; highlight current line, except in certain modes
+  (global-hl-line-mode t)
+  (make-variable-buffer-local 'global-hl-line-mode)
+  (defvar my-ghd-modes '(
+			 shell-mode-hook
+			 git-commit-mode-hook
+			 term-mode-hook
+			 )
+    "Modes to ensure global-hl-line-mode is disabled for.")
+  (dolist (m my-ghd-modes)
+    (add-hook m (lambda () (setq global-hl-line-mode nil))))
+
+  (add-hook 'prog-mode-hook 'linum-mode)
+#+END_SRC
+
+* set up packages with melpa
+#+BEGIN_SRC emacs-lisp
+    (require 'package)
+    (setq package-enable-at-startup nil)
+    (add-to-list 'package-archives
+		 '("melpa" . "https://melpa.org/packages/"))
+    (package-initialize)
+
+  ;; Bootstrap 'use-package'
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+#+End_SRC
+
+* Installed Packages
+
+** try
+   #+BEGIN_SRC emacs-lisp
+     (use-package try
+       :ensure t)
+   #+END_SRC
+
+** which key
+   #+BEGIN_SRC emacs-lisp
+     (use-package which-key
+       :ensure t
+       :config
+       (which-key-mode))
+   #+END_SRC
+
+** org mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package org-bullets
+       :ensure t
+       :config
+       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+   #+END_SRC
+*** org reveal
+    Build reveal.js presentations in org mode.
+    Check out the [[https://github.com/yjwen/org-reveal][org-reveal]] home page
+    #+BEGIN_SRC emacs-lisp
+      (use-package ox-reveal
+	:ensure ox-reveal)
+
+      (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0./")
+      (setq org-reveal-mathjax t)
+
+      (use-package htmilize
+	:ensure t)
+    #+END_SRC
+** ace window
+   #+BEGIN_SRC emacs-lisp
+     (use-package ace-window
+       :ensure t
+       :init
+       (progn
+	 (global-set-key [remap other-window] 'ace-window)
+	 (custom-set-faces
+	  '(aw-leading-char-face
+	    ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+	 ))
+   #+END_SRC
+
+** counsel
+   counsel is used by the swiper package
+   #+BEGIN_SRC emacs-lisp
+     (use-package counsel
+       :ensure t
+       )
+   #+END_SRC
+
+** swiper
+   #+BEGIN_SRC emacs-lisp
+     (use-package swiper
+       :ensure try
+       :config
+       (progn
+	 (ivy-mode 1)
+	 (setq ivy-use-virtual-buffers t)
+	 (global-set-key "\C-s" 'swiper)
+	 (global-set-key (kbd "C-c C-r") 'ivy-resume)
+	 (global-set-key (kbd "<f6>") 'ivy-resume)
+	 (global-set-key (kbd "M-x") 'counsel-M-x)
+	 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+	 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+	 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+	 (global-set-key (kbd "<f1> l") 'counsel-load-library)
+	 (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+	 (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+	 (global-set-key (kbd "C-c g") 'counsel-git)
+	 (global-set-key (kbd "C-c j") 'counsel-git-grep)
+	 (global-set-key (kbd "C-c k") 'counsel-ag)
+	 (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+	 ))
+   #+END_SRC
+
+** auto complete
+   #+BEGIN_SRC emacs-lisp
+     (use-package auto-complete
+       :ensure t
+       :init
+       (progn
+	 (ac-config-default)
+	 (global-auto-complete-mode t)
+	 ))
+   #+END_SRC
+
+** theme
+   #+BEGIN_SRC emacs-lisp
+     (use-package zenburn-theme
+       :ensure t
+       :config (load-theme 'zenburn t))
+   #+END_SRC
+** flycheck
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck
+       :ensure t
+       :init
+       (global-flycheck-mode t))
+   #+END_SRC
+** yasnippet
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :ensure t
+       :init
+       (yas-global-mode 1))
+   #+END_SRC
+** direx
+   #+BEGIN_SRC emacs-lisp
+     (use-package direx
+       :ensure t)
+   #+END_SRC
+** popwin
+   popwin helps control obnoxious pop up buffer windows. [[https://github.com/m2ym/popwin-el][Page]]
+   #+BEGIN_SRC emacs-lisp
+     (use-package popwin
+       :ensure t)
+     (setq display-buffer-function 'popwin:display-buffer)
+   #+END_SRC
+** undoo tree
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       :ensure t
+       :init
+       (global-undo-tree-mode))
+   #+END_SRC
+** go packages
+*** Packages to look at
+    - [[https://github.com/iced/go-gopath][go-gopath]]
+    - [[https://github.com/samertm/go-stacktracer.el][go-stacktracer]]
+*** go-mode
+    Base package for working with Go
+    #+BEGIN_SRC emacs-lisp
+      (use-package go-mode
+	:ensure t
+	:config
+	(setq gofmt-command "goimports")
+	(add-to-list 'exec-path "~/src/go/bin")
+	(add-hook 'before-save-hook 'gofmt-before-save)
+	(add-hook 'go-mode-hook 'setup-go-mode-compile)
+	(setenv "GOROOT" "/usr/local/go")	
+	(setenv "GOPATH" "/home/scott/src/go")
+	(add-hook 'go-mode-hook 'flycheck-mode))
+
+      ;; Run linters on save
+      (defun setup-go-mode-compile ()
+	(if (not (string-match "go" compile-command))
+	    (set (make-local-variable 'compile-command)
+		 "gometalinter --deadline 10s && go vet")))
+    #+END_SRC
+*** auto complete
+    #+BEGIN_SRC emacs-lisp
+    (require 'go-autocomplete)
+    (require 'auto-complete-config)
+    #+END_SRC
+*** linting
+    Install gometalinter with `go get github.com/alecthomas/gometalinter`
+    Install sublinters with `gometalinter --install`
+    #+BEGIN_SRC emacs-lisp
+      (use-package flycheck-gometalinter
+	:ensure t
+	:config
+	(progn
+	  (flycheck-gometalinter-setup))
+	;; skip linting vendor dirs
+	(setq flycheck-gometalinter-vendor t)
+	;; use in test files
+	(setq flycheck-gometalinter-test t)
+	;; only fast linters
+	(setq flycheck-gometalinter-fast t)
+	;; disable gotype
+	(setq flycheck-gometalinter-disable-linters '("gotype")))
+    #+END_SRC
+*** go-add-tags
+    This package adds tags to struct fields. [[https://github.com/syohex/emacs-go-add-tags][Page]]
+    #+BEGIN_SRC emacs-lisp
+      (use-package go-add-tags
+	:ensure t)
+    #+END_SRC
+*** go-eldoc
+    This package provides documentation for things under the cursor, formatted for emacs. [[https://github.com/syohex/emacs-go-eldoc][Page]]
+    #+BEGIN_SRC emacs-lisp
+      (use-package go-eldoc
+	:ensure t
+	:diminish eldoc-mode
+	:config (add-hook 'go-mode-hook 'go-eldoc-setup))
+    #+END_SRC
+*** go-direx
+    This package views go code in a tree style viewer. [[https://github.com/syohex/emacs-go-direx][Page]]
+    Depends on direx package.
+    Need to install gotags with `go get -u github.com/jstemmer/gotags`
+    #+BEGIN_SRC emacs-lisp
+      (use-package go-direx
+	:ensure t)
+      (define-key go-mode-map (kbd "C-c C-x") 'go-direx-pop-to-buffer)
+      (push '("^\*go-direx:" :regexp t :position left :width 0.4 :dedicated t :stick t)
+	    popwin:special-display-config)
+    #+END_SRC
