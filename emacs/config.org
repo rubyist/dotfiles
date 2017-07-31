@@ -2,6 +2,7 @@
 
 * General Emacs Settings
 This section configures base settings for emacs.
+
 ** load path
 Packages that are not available through elpa/melpa can be put into
 ~/.emacs.d/local/. This adds that to the emacs loadpath.
@@ -116,94 +117,117 @@ Once ace-window is active, other options can be taken:
 #+END_SRC
 
 ** auto complete
-   #+BEGIN_SRC emacs-lisp
-     (use-package auto-complete
-       :diminish auto-complete-mode
-       :init
-       (ac-config-default)
-       (global-auto-complete-mode t))
-   #+END_SRC
+This just sets up the general [[https://github.com/auto-complete/auto-complete][auto-complete]] package.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package auto-complete
+    :diminish auto-complete-mode
+    :init
+    (ac-config-default)
+    (global-auto-complete-mode t))
+#+END_SRC
 
 ** counsel
-   counsel is used by the swiper package
-   #+BEGIN_SRC emacs-lisp
-     (use-package counsel)
-   #+END_SRC
+counsel is used by the swiper package.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package counsel)
+#+END_SRC
 
 ** direx
-   #+BEGIN_SRC emacs-lisp
-     (use-package direx)
-   #+END_SRC
+[[https://github.com/m2ym/direx-el][direx]] is a general purpose directory/tree package. I use this for go-direx.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package direx)
+#+END_SRC
 
 ** flycheck
-   #+BEGIN_SRC emacs-lisp
-     (use-package flycheck
-       :diminish flycheck-mode
-       :init
-       (global-flycheck-mode t))
-   #+END_SRC
+[[https://github.com/flycheck/flycheck][flycheck]] is used for syntax checking in various languages.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :diminish flycheck-mode
+    :init
+    (global-flycheck-mode t))
+#+END_SRC
+
 ** go packages
+This section contains all the packages related to Go programming.
+
 *** Packages to look at
-    - [[https://github.com/iced/go-gopath][go-gopath]]
-    - [[https://github.com/samertm/go-stacktracer.el][go-stacktracer]]
+I'm not currently using these packages, but they look interesting.
+
+- [[https://github.com/iced/go-gopath][go-gopath]]
+- [[https://github.com/samertm/go-stacktracer.el][go-stacktracer]]
 
 *** go-mode
-    Base package for working with Go
-    #+BEGIN_SRC emacs-lisp
-      (setenv "PATH" (concat (getenv "PATH") ":/home/scott/src/go/bin"))
-      (add-to-list 'exec-path "/home/scott/src/go/bin")
-      (use-package go-mode
-	:config
-	(setq gofmt-command "goimports")
-	(add-hook 'before-save-hook 'gofmt-before-save)
-	(add-hook 'go-mode-hook 'setup-go-mode-compile)
-	(setenv "GOROOT" "/usr/local/go")
-	(setenv "GOPATH" "/home/scott/src/go")
-	(add-hook 'go-mode-hook 'flycheck-mode))
+[[https://github.com/dominikh/go-mode.el][go-mode]] is the base package for working with Go.
 
-      ;; Run linters on save
-      (defun setup-go-mode-compile ()
-	(if (not (string-match "go" compile-command))
-	    (set (make-local-variable 'compile-command)
-		 "gometalinter --deadline 10s && go vet")))
-    #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (setenv "PATH" (concat (getenv "PATH") ":/home/scott/src/go/bin"))
+  (add-to-list 'exec-path "/home/scott/src/go/bin")
+  (use-package go-mode
+    :config
+    (setq gofmt-command "goimports")
+    (add-hook 'before-save-hook 'gofmt-before-save)
+    (add-hook 'go-mode-hook 'setup-go-mode-compile)
+    (setenv "GOROOT" "/usr/local/go")
+    (setenv "GOPATH" "/home/scott/src/go")
+    (add-hook 'go-mode-hook 'flycheck-mode))
+
+  ;; Run linters on save
+  (defun setup-go-mode-compile ()
+    (if (not (string-match "go" compile-command))
+        (set (make-local-variable 'compile-command)
+             "gometalinter --deadline 10s && go vet")))
+#+END_SRC
 
 *** auto complete
-    #+BEGIN_SRC emacs-lisp
-    (require 'go-autocomplete)
-    (require 'auto-complete-config)
-    #+END_SRC
+This sets up go-autocomplete, which uses `gocode` for auto completion.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'go-autocomplete)
+  (require 'auto-complete-config)
+#+END_SRC
 
 *** linting
-    Install gometalinter with `go get github.com/alecthomas/gometalinter`
-    Install sublinters with `gometalinter --install`
-    #+BEGIN_SRC emacs-lisp
-      (use-package flycheck-gometalinter
-	:config
-	(flycheck-gometalinter-setup)
-	;; skip linting vendor dirs
-	(setq flycheck-gometalinter-vendor t)
-	;; use in test files
-	(setq flycheck-gometalinter-test t)
-	;; only fast linters
-	(setq flycheck-gometalinter-fast t)
-	;; disable gotype
-	(setq flycheck-gometalinter-disable-linters '("gotype")))
-    #+END_SRC
+This adds various linters to flycheck.
+
+Dependancies:
+- gometalinter `go get github.com/alecthomas/gometalinter`
+- sub-linters `gometalinter --install`
+
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck-gometalinter
+    :config
+    (flycheck-gometalinter-setup)
+    ;; skip linting vendor dirs
+    (setq flycheck-gometalinter-vendor t)
+    ;; use in test files
+    (setq flycheck-gometalinter-test t)
+    ;; only fast linters
+    (setq flycheck-gometalinter-fast t)
+    ;; disable gotype
+    (setq flycheck-gometalinter-disable-linters '("gotype")))
+#+END_SRC
 
 *** go-add-tags
-    This package adds tags to struct fields. [[https://github.com/syohex/emacs-go-add-tags][Page]]
-    #+BEGIN_SRC emacs-lisp
-      (use-package go-add-tags)
-      #+END_SRC
+[[https://github.com/syohex/emacs-go-add-tags][go-add-tags]] helps manage tags on struct fields.
+
+# TODO document this
+
+#+BEGIN_SRC emacs-lisp
+  (use-package go-add-tags)
+#+END_SRC
 
 *** go-eldoc
-    This package provides documentation for things under the cursor, formatted for emacs. [[https://github.com/syohex/emacs-go-eldoc][Page]]
-    #+BEGIN_SRC emacs-lisp
-      (use-package go-eldoc
-	:diminish eldoc-mode
-	:config (add-hook 'go-mode-hook 'go-eldoc-setup))
-    #+END_SRC
+[[https://github.com/syohex/emacs-go-eldoc][go-eldoc]] formats go documentation for emacs and displays it in the status bar.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package go-eldoc
+    :diminish eldoc-mode
+    :config (add-hook 'go-mode-hook 'go-eldoc-setup))
+#+END_SRC
 
 *** go-direx
     This package views go code in a tree style viewer. [[https://github.com/syohex/emacs-go-direx][Page]]
@@ -223,139 +247,162 @@ Once ace-window is active, other options can be taken:
     #+END_SRC
 
 ** magit
-   #+BEGIN_SRC emacs-lisp
-     (use-package magit
-       :bind (("C-x g" . magit-status)))
-   #+END_SRC
+[[https://github.com/magit/magit][magit]] is the best git interface known to humankind.
 
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :bind (("C-x g" . magit-status)))
+#+END_SRC
+   
 ** org mode
-   #+BEGIN_SRC emacs-lisp
-     (use-package org
-       :config
-       (setq org-directory "~/Dropbox/org")
-       (setq org-default-notes-file (concat org-directory "/notes.org"))
-       (setq org-export-html-postamble nil)
-       (setq org-startup-folded (quote overview))
-       (setq org-startup-indented t)
-       (setq org-file-apps (append '(
-                                     ("\\.pdf\\'" . "evince %s")
-                                     ) org-file-apps ))
+Org mode is org mode.
 
-       (setq org-capture-templates
-             '(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
-                "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")))
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :config
+    (setq org-directory "~/Dropbox/org")
+    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    (setq org-export-html-postamble nil)
+    (setq org-startup-folded (quote overview))
+    (setq org-startup-indented t)
+    (setq org-file-apps (append '(
+                                  ("\\.pdf\\'" . "evince %s")
+                                  ) org-file-apps ))
 
-       (defadvice org-capture-finalize
-           (after delete-capture-frame activate)
-         "Advise capture-finalize to close the frame"
-         (if (equal "capture" (frame-parameter nil 'name))
-             (delete-frame)))
+    (setq org-capture-templates
+          '(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
+             "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")))
 
-       (defadvice org-capture-destroy
-           (after delete-capture-frame activate)
-         "Advise catpure-destroy to close the frame"
-         (if (equal "capture" (frame-parameter nil 'name))
-             (delete-frame)))
+    (defadvice org-capture-finalize
+        (after delete-capture-frame activate)
+      "Advise capture-finalize to close the frame"
+      (if (equal "capture" (frame-parameter nil 'name))
+          (delete-frame)))
 
-       (defadvice org-capture-kill
-           (after delete-capture-frame activate)
-         "Advise capture-kill to close the frame"
-         (if (equal "capture" (frame-parameter nil 'name))
-             (delete-frame)))
+    (defadvice org-capture-destroy
+        (after delete-capture-frame activate)
+      "Advise catpure-destroy to close the frame"
+      (if (equal "capture" (frame-parameter nil 'name))
+          (delete-frame)))
 
-       :bind
-       (("\C-c c" . org-capture)
-        ("\C-c a" . org-agenda)))
+    (defadvice org-capture-kill
+        (after delete-capture-frame activate)
+      "Advise capture-kill to close the frame"
+      (if (equal "capture" (frame-parameter nil 'name))
+          (delete-frame)))
 
-     (use-package noflet
-       :config
-       (defun make-capture-frame ()
-         "Create a new frame and run org-capture"
-         (interactive)
-         (select-frame-by-name "capture")
-         (delete-other-windows)
-         (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
-           (org-capture))))
-   #+END_SRC
+    :bind
+    (("\C-c c" . org-capture)
+     ("\C-c a" . org-agenda)))
+
+  (use-package noflet
+    :config
+    (defun make-capture-frame ()
+      "Create a new frame and run org-capture"
+      (interactive)
+      (select-frame-by-name "capture")
+      (delete-other-windows)
+      (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
+        (org-capture))))
+#+END_SRC
 
 *** org bullets
-    #+BEGIN_SRC emacs-lisp
-      (use-package org-bullets
-	:config
-	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-   #+END_SRC
+org-bullets makes org mode look nice.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
 
 *** org reveal
-    Build reveal.js presentations in org mode.
-    Check out the [[https://github.com/yjwen/org-reveal][org-reveal]] home page
-    #+BEGIN_SRC emacs-lisp
-      (use-package ox-reveal
-	:ensure ox-reveal)
+[[https://github.com/yjwen/org-reveal][org-reveal]] will build reveal.js presentations from org mode files.
 
-      (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0./")
-      (setq org-reveal-mathjax t)
+#+BEGIN_SRC emacs-lisp
+  (use-package ox-reveal
+    :ensure ox-reveal)
 
-      (use-package htmilize)
-    #+END_SRC
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0./")
+  (setq org-reveal-mathjax t)
+
+  (use-package htmilize)
+#+END_SRC
+
 ** popwin
-   popwin helps control obnoxious pop up buffer windows. [[https://github.com/m2ym/popwin-el][Page]]
-   #+BEGIN_SRC emacs-lisp
-     (use-package popwin
-       :init
-       (setq display-buffer-function 'popwin:display-buffer))
-   #+END_SRC
+[[https://github.com/m2ym/popwin-el][popwin]] helps control obnoxious pop up windows.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package popwin
+    :init
+    (setq display-buffer-function 'popwin:display-buffer))
+#+END_SRC
 
 ** protobuf
+Mode for working with protocol buffers proto files.
+
 #+BEGIN_SRC emacs-lisp
   (use-package protobuf-mode)
 #+END_SRC
 ** swiper
-   #+BEGIN_SRC emacs-lisp
-     (use-package swiper
-       :diminish ivy-mode
-       :config
-       (ivy-mode 1)
-       (setq ivy-use-virtual-buffers t)
-       :bind (("\C-s" . swiper)
-	      ("C-c C-r" . ivy-resume)
-	      ("M-x" . counsel-M-x)
-	      ("C-x C-f" . counsel-find-file)
-	      ("C-c g" . counsel-git)
-	      ("C-c j" . counsel-git-grep)
-	      ("C-c k" . counsel-ag)
-	      (:map read-expression-map ("C-r" . counsel-expression-history))))
-   #+END_SRC
+[[https://github.com/abo-abo/swiper][swiper]] is an ivy-based alternative to isearch.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :diminish ivy-mode
+    :config
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    :bind (("\C-s" . swiper)
+           ("C-c C-r" . ivy-resume)
+           ("M-x" . counsel-M-x)
+           ("C-x C-f" . counsel-find-file)
+           ("C-c g" . counsel-git)
+           ("C-c j" . counsel-git-grep)
+           ("C-c k" . counsel-ag)
+           (:map read-expression-map ("C-r" . counsel-expression-history))))
+#+END_SRC
 
 ** theme
-   #+BEGIN_SRC emacs-lisp
-     (use-package zenburn-theme
-       :config (load-theme 'zenburn t))
-   #+END_SRC
-** try
-   #+BEGIN_SRC emacs-lisp
-     (use-package try)
-   #+END_SRC
+The theme.
 
-** undoo tree
-   #+BEGIN_SRC emacs-lisp
-     (use-package undo-tree
-       :diminish undo-tree-mode
-       :init
-       (global-undo-tree-mode))
-   #+END_SRC
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :config (load-theme 'zenburn t))
+#+END_SRC
+
+** try
+try lets you try a package without installing it.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package try)
+#+END_SRC
+
+** undo tree
+undo-tree provides a convenient way to navigate the undo ring.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package undo-tree
+    :diminish undo-tree-mode
+    :init
+    (global-undo-tree-mode))
+#+END_SRC
 
 ** which key
-   #+BEGIN_SRC emacs-lisp
-     (use-package which-key
-       :diminish which-key-mode
-       :config
-       (which-key-mode))
-   #+END_SRC
+which-key figures out what a key does.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :diminish which-key-mode
+    :config
+    (which-key-mode))
+#+END_SRC
 
 ** yasnippet
-   #+BEGIN_SRC emacs-lisp
-     (use-package yasnippet
-       :diminish yas-minor-mode
-       :init
-       (yas-global-mode 1))
-   #+END_SRC
+yasnippet provides snippets.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :diminish yas-minor-mode
+    :init
+    (yas-global-mode 1))
+#+END_SRC
