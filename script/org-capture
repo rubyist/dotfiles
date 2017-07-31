@@ -1,0 +1,2 @@
+#!/bin/sh
+emacsclient --create-frame --frame-parameters='(quote (name . "capture"))' --no-wait --eval "(make-capture-frame)"
