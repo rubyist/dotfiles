@@ -72,9 +72,59 @@
 
 ** org mode
    #+BEGIN_SRC emacs-lisp
-     (use-package org-bullets
+     (use-package org
        :config
-       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+       (setq org-directory "~/Dropbox/org")
+       (setq org-default-notes-file (concat org-directory "/notes.org"))
+       (setq org-export-html-postamble nil)
+       (setq org-startup-folded (quote overview))
+       (setq org-startup-indented t)
+       (setq org-file-apps (append '(
+                                     ("\\.pdf\\'" . "evince %s")
+                                     ) org-file-apps ))
+
+       (setq org-capture-templates
+             '(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
+                "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")))
+
+       (defadvice org-capture-finalize
+           (after delete-capture-frame activate)
+         "Advise capture-finalize to close the frame"
+         (if (equal "capture" (frame-parameter nil 'name))
+             (delete-frame)))
+
+       (defadvice org-capture-destroy
+           (after delete-capture-frame activate)
+         "Advise catpure-destroy to close the frame"
+         (if (equal "capture" (frame-parameter nil 'name))
+             (delete-frame)))
+
+       (defadvice org-capture-kill
+           (after delete-capture-frame activate)
+         "Advise capture-kill to close the frame"
+         (if (equal "capture" (frame-parameter nil 'name))
+             (delete-frame)))
+
+       :bind
+       (("\C-c c" . org-capture)
+        ("\C-c a" . org-agenda)))
+
+     (use-package noflet
+       :config
+       (defun make-capture-frame ()
+         "Create a new frame and run org-capture"
+         (interactive)
+         (select-frame-by-name "capture")
+         (delete-other-windows)
+         (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
+           (org-capture))))
+   #+END_SRC
+
+*** org bullets
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+	:config
+	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
    #+END_SRC
 
 *** org reveal
