@@ -182,6 +182,10 @@
        :bind (("C-x g" . magit-status)))
    #+END_SRC
 
+** protobuf
+#+BEGIN_SRC emacs-lisp
+  (use-package protobuf-mode)
+#+END_SRC
 ** go packages
 *** Packages to look at
     - [[https://github.com/iced/go-gopath][go-gopath]]

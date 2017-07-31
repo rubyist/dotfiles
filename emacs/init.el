@@ -15,7 +15,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (magit go-guru undo-tree linum-relative popwin go-add-tags yasnippet flycheck htmilize ox-reveal zenburn-theme which-key use-package try org-edna org-bullets counsel color-theme badger-theme auto-complete ace-window))))
+    (protobuf-mode noflet magit go-guru undo-tree linum-relative popwin go-add-tags yasnippet flycheck htmilize ox-reveal zenburn-theme which-key use-package try org-edna org-bullets counsel color-theme badger-theme auto-complete ace-window))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
