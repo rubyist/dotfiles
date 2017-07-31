@@ -210,9 +210,7 @@ bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
 
-exec xcalib -d :0 /usr/share/color/icc/colord/dell.icc
-exec /home/scott/script/refresh-rate
+exec ~/dotfiles/script/monitor
 exec xinput set-prop "Clearly Superior Technologies. CST Laser Trackball" 275 1
-#exec /usr/bin/pa-applet
-exec_always feh --bg-scale /home/scott/Pictures/background.jpg
+exec_always feh --bg-scale ~/Pictures/background.jpg
 
