@@ -1,23 +1,39 @@
 #+STARTUP: overview
 
-* load path
+* General Emacs Settings
+This section configures base settings for emacs.
+** load path
+Packages that are not available through elpa/melpa can be put into
+~/.emacs.d/local/. This adds that to the emacs loadpath.
+
   #+BEGIN_SRC emacs-lisp
     (add-to-list 'load-path "~/.emacs.d/local/")
   #+END_SRC
 
-* aliases
+** aliases
+This section defines aliases.
+
 #+BEGIN_SRC emacs-lisp
+  ;; Use ibuffer whenever list-buffer is called.
   (defalias 'list-buffer 'ibuffer)
 #+END_SRC
 
-* keybindings
+** keybindings
+This section defines some global keybindings.
+
 #+BEGIN_SRC emacs-lisp
+  ;; Install the default keybindings for windmove.
   (windmove-default-keybindings)
+
+  ;; Ingore C-z because why would I ever want that?!
   (global-unset-key (kbd "C-z"))
 #+END_SRC
 
-* interface tweaks
+** interface tweaks
+This section tweaks various aspects of the emacs interface.
+
 #+BEGIN_SRC emacs-lisp
+  ;; Turn off a bunch of annoying things.
   (setq inhibit-startup-message t)
   (tool-bar-mode -1)
   (menu-bar-mode -1)
@@ -29,26 +45,30 @@
   (global-hl-line-mode t)
   (make-variable-buffer-local 'global-hl-line-mode)
   (defvar my-ghd-modes '(
-			 shell-mode-hook
-			 git-commit-mode-hook
-			 term-mode-hook
-			 )
+                         shell-mode-hook
+                         git-commit-mode-hook
+                         term-mode-hook
+                         )
     "Modes to ensure global-hl-line-mode is disabled for.")
   (dolist (m my-ghd-modes)
     (add-hook m (lambda () (setq global-hl-line-mode nil))))
 
+  ;; Use linum-mode when we're in a programming mode.
   (add-hook 'prog-mode-hook 'linum-mode)
 
+  ;; Manually diminish things that can't be diminished via use-package.
   (diminish 'auto-revert-mode)
 #+END_SRC
 
-* set up packages with melpa
+** set up packages with melpa
+This section sets up emacs for using pcakges and bootstraps use-package.
+
 #+BEGIN_SRC emacs-lisp
-    (require 'package)
-    (setq package-enable-at-startup nil)
-    (add-to-list 'package-archives
-		 '("melpa" . "https://melpa.org/packages/"))
-    (package-initialize)
+  (require 'package)
+  (setq package-enable-at-startup nil)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize)
 
   ;; Bootstrap 'use-package'
   (unless (package-installed-p 'use-package)
@@ -57,122 +77,43 @@
 #+End_SRC
 
 * Installed Packages
-** try
-   #+BEGIN_SRC emacs-lisp
-     (use-package try)
-   #+END_SRC
-
-** which key
-   #+BEGIN_SRC emacs-lisp
-     (use-package which-key
-       :diminish which-key-mode
-       :config
-       (which-key-mode))
-   #+END_SRC
-
-** org mode
-   #+BEGIN_SRC emacs-lisp
-     (use-package org
-       :config
-       (setq org-directory "~/Dropbox/org")
-       (setq org-default-notes-file (concat org-directory "/notes.org"))
-       (setq org-export-html-postamble nil)
-       (setq org-startup-folded (quote overview))
-       (setq org-startup-indented t)
-       (setq org-file-apps (append '(
-                                     ("\\.pdf\\'" . "evince %s")
-                                     ) org-file-apps ))
-
-       (setq org-capture-templates
-             '(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
-                "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")))
-
-       (defadvice org-capture-finalize
-           (after delete-capture-frame activate)
-         "Advise capture-finalize to close the frame"
-         (if (equal "capture" (frame-parameter nil 'name))
-             (delete-frame)))
-
-       (defadvice org-capture-destroy
-           (after delete-capture-frame activate)
-         "Advise catpure-destroy to close the frame"
-         (if (equal "capture" (frame-parameter nil 'name))
-             (delete-frame)))
-
-       (defadvice org-capture-kill
-           (after delete-capture-frame activate)
-         "Advise capture-kill to close the frame"
-         (if (equal "capture" (frame-parameter nil 'name))
-             (delete-frame)))
-
-       :bind
-       (("\C-c c" . org-capture)
-        ("\C-c a" . org-agenda)))
-
-     (use-package noflet
-       :config
-       (defun make-capture-frame ()
-         "Create a new frame and run org-capture"
-         (interactive)
-         (select-frame-by-name "capture")
-         (delete-other-windows)
-         (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
-           (org-capture))))
-   #+END_SRC
-
-*** org bullets
-    #+BEGIN_SRC emacs-lisp
-      (use-package org-bullets
-	:config
-	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-   #+END_SRC
-
-*** org reveal
-    Build reveal.js presentations in org mode.
-    Check out the [[https://github.com/yjwen/org-reveal][org-reveal]] home page
-    #+BEGIN_SRC emacs-lisp
-      (use-package ox-reveal
-	:ensure ox-reveal)
-
-      (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0./")
-      (setq org-reveal-mathjax t)
-
-      (use-package htmilize)
-    #+END_SRC
+This section sets up all the various packages, primarily using use-package.
 
 ** ace window
-   #+BEGIN_SRC emacs-lisp
-     (use-package ace-window
-       :init
-       (global-set-key [remap other-window] 'ace-window)
-       (custom-set-faces
-	'(aw-leading-char-face
-	  ((t (:inherit ace-jump-face-foreground :height 3.0)))))
-       )
-   #+END_SRC
+[[https://github.com/abo-abo/ace-window][ace-window]] provides a quick and easy way to switch between windows.
 
-** counsel
-   counsel is used by the swiper package
-   #+BEGIN_SRC emacs-lisp
-     (use-package counsel)
-   #+END_SRC
+This configuration steals the keybinding for other-window (C-x o) and
+uses it for ace-window. I prefer ace-window to scope to the frame,
+rather than globally.
 
-** swiper
-   #+BEGIN_SRC emacs-lisp
-     (use-package swiper
-       :diminish ivy-mode
-       :config
-       (ivy-mode 1)
-       (setq ivy-use-virtual-buffers t)
-       :bind (("\C-s" . swiper)
-	      ("C-c C-r" . ivy-resume)
-	      ("M-x" . counsel-M-x)
-	      ("C-x C-f" . counsel-find-file)
-	      ("C-c g" . counsel-git)
-	      ("C-c j" . counsel-git-grep)
-	      ("C-c k" . counsel-ag)
-	      (:map read-expression-map ("C-r" . counsel-expression-history))))
-   #+END_SRC
+Invoke ace-window with `C-x o`, as normal. If
+there are only two windows, you'll jump to the other window. If there
+are more than two windows, each window will get a numeric
+overlay. Type the number to jump to the desired window.
+
+Using a `C-u` prefix will swap windows. `C-u C-u` will delete the
+selected window.
+
+Once ace-window is active, other options can be taken:
+
+- `x` - delete window
+- `m` - swap (move) window
+- `c` - split window fairly
+- `v` - split window vertically
+- `b` - split window horizontally
+- `n` - select the previous window
+- `i` - maximize selected window
+- `o` - maximize current window
+
+#+BEGIN_SRC emacs-lisp
+  (use-package ace-window
+    :init
+    (global-set-key [remap other-window] 'ace-window)
+    (setq aw-scope frame)
+    (custom-set-faces
+     '(aw-leading-char-face
+       ((t (:inherit ace-jump-face-foreground :height 3.0))))))
+#+END_SRC
 
 ** auto complete
    #+BEGIN_SRC emacs-lisp
@@ -183,10 +124,15 @@
        (global-auto-complete-mode t))
    #+END_SRC
 
-** theme
+** counsel
+   counsel is used by the swiper package
    #+BEGIN_SRC emacs-lisp
-     (use-package zenburn-theme
-       :config (load-theme 'zenburn t))
+     (use-package counsel)
+   #+END_SRC
+
+** direx
+   #+BEGIN_SRC emacs-lisp
+     (use-package direx)
    #+END_SRC
 
 ** flycheck
@@ -196,46 +142,6 @@
        :init
        (global-flycheck-mode t))
    #+END_SRC
-
-** yasnippet
-   #+BEGIN_SRC emacs-lisp
-     (use-package yasnippet
-       :diminish yas-minor-mode
-       :init
-       (yas-global-mode 1))
-   #+END_SRC
-
-** direx
-   #+BEGIN_SRC emacs-lisp
-     (use-package direx)
-   #+END_SRC
-
-** popwin
-   popwin helps control obnoxious pop up buffer windows. [[https://github.com/m2ym/popwin-el][Page]]
-   #+BEGIN_SRC emacs-lisp
-     (use-package popwin
-       :init
-       (setq display-buffer-function 'popwin:display-buffer))
-   #+END_SRC
-
-** undoo tree
-   #+BEGIN_SRC emacs-lisp
-     (use-package undo-tree
-       :diminish undo-tree-mode
-       :init
-       (global-undo-tree-mode))
-   #+END_SRC
-
-** magit
-   #+BEGIN_SRC emacs-lisp
-     (use-package magit
-       :bind (("C-x g" . magit-status)))
-   #+END_SRC
-
-** protobuf
-#+BEGIN_SRC emacs-lisp
-  (use-package protobuf-mode)
-#+END_SRC
 ** go packages
 *** Packages to look at
     - [[https://github.com/iced/go-gopath][go-gopath]]
@@ -315,3 +221,141 @@
       (use-package go-guru)
       (add-hook 'go-mode-hook 'go-guru-hl-identifier-mode)
     #+END_SRC
+
+** magit
+   #+BEGIN_SRC emacs-lisp
+     (use-package magit
+       :bind (("C-x g" . magit-status)))
+   #+END_SRC
+
+** org mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package org
+       :config
+       (setq org-directory "~/Dropbox/org")
+       (setq org-default-notes-file (concat org-directory "/notes.org"))
+       (setq org-export-html-postamble nil)
+       (setq org-startup-folded (quote overview))
+       (setq org-startup-indented t)
+       (setq org-file-apps (append '(
+                                     ("\\.pdf\\'" . "evince %s")
+                                     ) org-file-apps ))
+
+       (setq org-capture-templates
+             '(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
+                "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")))
+
+       (defadvice org-capture-finalize
+           (after delete-capture-frame activate)
+         "Advise capture-finalize to close the frame"
+         (if (equal "capture" (frame-parameter nil 'name))
+             (delete-frame)))
+
+       (defadvice org-capture-destroy
+           (after delete-capture-frame activate)
+         "Advise catpure-destroy to close the frame"
+         (if (equal "capture" (frame-parameter nil 'name))
+             (delete-frame)))
+
+       (defadvice org-capture-kill
+           (after delete-capture-frame activate)
+         "Advise capture-kill to close the frame"
+         (if (equal "capture" (frame-parameter nil 'name))
+             (delete-frame)))
+
+       :bind
+       (("\C-c c" . org-capture)
+        ("\C-c a" . org-agenda)))
+
+     (use-package noflet
+       :config
+       (defun make-capture-frame ()
+         "Create a new frame and run org-capture"
+         (interactive)
+         (select-frame-by-name "capture")
+         (delete-other-windows)
+         (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
+           (org-capture))))
+   #+END_SRC
+
+*** org bullets
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+	:config
+	(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+   #+END_SRC
+
+*** org reveal
+    Build reveal.js presentations in org mode.
+    Check out the [[https://github.com/yjwen/org-reveal][org-reveal]] home page
+    #+BEGIN_SRC emacs-lisp
+      (use-package ox-reveal
+	:ensure ox-reveal)
+
+      (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0./")
+      (setq org-reveal-mathjax t)
+
+      (use-package htmilize)
+    #+END_SRC
+** popwin
+   popwin helps control obnoxious pop up buffer windows. [[https://github.com/m2ym/popwin-el][Page]]
+   #+BEGIN_SRC emacs-lisp
+     (use-package popwin
+       :init
+       (setq display-buffer-function 'popwin:display-buffer))
+   #+END_SRC
+
+** protobuf
+#+BEGIN_SRC emacs-lisp
+  (use-package protobuf-mode)
+#+END_SRC
+** swiper
+   #+BEGIN_SRC emacs-lisp
+     (use-package swiper
+       :diminish ivy-mode
+       :config
+       (ivy-mode 1)
+       (setq ivy-use-virtual-buffers t)
+       :bind (("\C-s" . swiper)
+	      ("C-c C-r" . ivy-resume)
+	      ("M-x" . counsel-M-x)
+	      ("C-x C-f" . counsel-find-file)
+	      ("C-c g" . counsel-git)
+	      ("C-c j" . counsel-git-grep)
+	      ("C-c k" . counsel-ag)
+	      (:map read-expression-map ("C-r" . counsel-expression-history))))
+   #+END_SRC
+
+** theme
+   #+BEGIN_SRC emacs-lisp
+     (use-package zenburn-theme
+       :config (load-theme 'zenburn t))
+   #+END_SRC
+** try
+   #+BEGIN_SRC emacs-lisp
+     (use-package try)
+   #+END_SRC
+
+** undoo tree
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       :diminish undo-tree-mode
+       :init
+       (global-undo-tree-mode))
+   #+END_SRC
+
+** which key
+   #+BEGIN_SRC emacs-lisp
+     (use-package which-key
+       :diminish which-key-mode
+       :config
+       (which-key-mode))
+   #+END_SRC
+
+** yasnippet
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :diminish yas-minor-mode
+       :init
+       (yas-global-mode 1))
+   #+END_SRC
