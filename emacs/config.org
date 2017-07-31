@@ -54,7 +54,6 @@
 #+End_SRC
 
 * Installed Packages
-
 ** try
    #+BEGIN_SRC emacs-lisp
      (use-package try)
@@ -63,6 +62,7 @@
 ** which key
    #+BEGIN_SRC emacs-lisp
      (use-package which-key
+       :diminish which-key-mode
        :config
        (which-key-mode))
    #+END_SRC
@@ -107,6 +107,7 @@
 ** swiper
    #+BEGIN_SRC emacs-lisp
      (use-package swiper
+       :diminish ivy-mode
        :config
        (ivy-mode 1)
        (setq ivy-use-virtual-buffers t)
@@ -123,6 +124,7 @@
 ** auto complete
    #+BEGIN_SRC emacs-lisp
      (use-package auto-complete
+       :diminish auto-complete-mode
        :init
        (ac-config-default)
        (global-auto-complete-mode t))
@@ -137,6 +139,7 @@
 ** flycheck
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
+       :diminish flycheck-mode
        :init
        (global-flycheck-mode t))
    #+END_SRC
@@ -144,6 +147,7 @@
 ** yasnippet
    #+BEGIN_SRC emacs-lisp
      (use-package yasnippet
+       :diminish yas-minor-mode
        :init
        (yas-global-mode 1))
    #+END_SRC
@@ -164,6 +168,7 @@
 ** undoo tree
    #+BEGIN_SRC emacs-lisp
      (use-package undo-tree
+       :diminish undo-tree-mode
        :init
        (global-undo-tree-mode))
    #+END_SRC
