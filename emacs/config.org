@@ -1,4 +1,4 @@
-#STARTUP: overview
+#+STARTUP: overview
 
 * load path
   #+BEGIN_SRC emacs-lisp
