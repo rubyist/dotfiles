@@ -1,0 +1,15 @@
+alias gh="cd $HOME/github/github"
+alias gcg="cd $GOPATH/src/github.com/github"
+alias gcr="cd $GOPATH/src/github.com/rubyist"
+
+alias gst="git status"
+alias gdone="git checkout master && git tug && git branch -d @{-1}"
+
+alias coverme="go test -coverprofile=coverage.out && go tool cover -html=coverage.out && rm -f coverage.out"
+
+alias pbcopy='xclip -i -sel c -f'
+
+alias fresh='sudo pacman -Sy; pacman -Qu'
+alias upper='sudo pacman -Syu'
+
+alias steam-wine='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Steam/Steam.exe >/dev/null 2>&1 &'
