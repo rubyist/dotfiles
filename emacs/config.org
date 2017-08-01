@@ -447,8 +447,10 @@ Mode for working with protocol buffers proto files.
 The theme.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
-    :config (load-theme 'zenburn t))
+  ;; (use-package zenburn-theme
+  ;;  :config (load-theme 'zenburn t))
+
+  (use-package color-theme-sanityinc-tomorrow)  
 #+END_SRC
 
 ** try
