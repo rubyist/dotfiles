@@ -247,9 +247,15 @@ Dependancies:
 ** magit
 [[https://github.com/magit/magit][magit]] is the best git interface known to humankind.
 
+I also use and configure [[https://github.com/sigma/magit-gh-pulls][magit-gh-pulls]] here.
+
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :bind (("C-x g" . magit-status)))
+
+  (use-package magit-gh-pulls
+    :config
+    (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 #+END_SRC
 
 ** mu4e
