@@ -258,6 +258,18 @@ I also use and configure [[https://github.com/sigma/magit-gh-pulls][magit-gh-pul
     (add-hook 'magit-mode-hook 'turn-on-magit-gh-pulls))
 #+END_SRC
 
+** markdown
+[[http://jblevins.org/projects/markdown-mode/][markdown-mode]] is a mode for markdown.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :commands (markdown-mode gfm-mode)
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
+#+END_SRC
+
 ** mu4e
 mu4e is part of mu, an email indexing and reading system.
 
