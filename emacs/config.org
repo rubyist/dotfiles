@@ -110,7 +110,7 @@ Once ace-window is active, other options can be taken:
   (use-package ace-window
     :init
     (global-set-key [remap other-window] 'ace-window)
-    (setq aw-scope frame)
+    (setq aw-scope 'frame)
     (custom-set-faces
      '(aw-leading-char-face
        ((t (:inherit ace-jump-face-foreground :height 3.0))))))
@@ -236,8 +236,6 @@ Dependancies:
     #+BEGIN_SRC emacs-lisp
       (use-package go-direx)
       (define-key go-mode-map (kbd "C-c C-x") 'go-direx-pop-to-buffer)
-      (push '("^\*go-direx:" :regexp t :position left :width 0.4 :dedicated t :stick t)
-	    popwin:special-display-config)
     #+END_SRC
 
 *** go-guru
@@ -328,14 +326,6 @@ org-bullets makes org mode look nice.
   (use-package htmilize)
 #+END_SRC
 
-** popwin
-[[https://github.com/m2ym/popwin-el][popwin]] helps control obnoxious pop up windows.
-
-#+BEGIN_SRC emacs-lisp
-  (use-package popwin
-    :init
-    (setq display-buffer-function 'popwin:display-buffer))
-#+END_SRC
 ** projectile
 [[https://github.com/bbatsov/projectile][projectile]] helps navigate to and within projects. This also sets up [[https://github.com/ericdanan/counsel-projectile][counsel-projectile]].
 
