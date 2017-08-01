@@ -302,6 +302,7 @@ mu4e is part of mu, an email indexing and reading system.
   (setq mu4e-context-policy 'pick-first)
   (setq mu4e-change-filenames-when-moving t)
   (setq mu4e-update-interval 60)
+  (setq mu4e-hide-index-messages t)
 #+END_SRC
 
 ** org mode
