@@ -251,7 +251,59 @@ Dependancies:
   (use-package magit
     :bind (("C-x g" . magit-status)))
 #+END_SRC
-   
+
+** mu4e
+mu4e is part of mu, an email indexing and reading system.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+  (require 'mu4e)
+  (setq mu4e-maildir "~/.mail")
+  (setq mu4e-contexts
+        `( ,(make-mu4e-context
+             :name "Personal"
+             :enter-func (lambda () (message "Entering Personal context"))
+             :leave-func (lambda () (mu4e-message "Leaving Personal context"))
+             :match-func (lambda (msg)
+                           (when msg
+                             (string-prefix-p "/barron" (mu4e-message-field msg :maildir))))
+             :vars '( ( user-mail-address  . "scott@barron.io" )
+                      ( user-full-name     . "Scott Barron" )
+                      ( mu4e-trash-folder  . "/barron/trash" )
+                      ( mu4e-refile-folder . "/barron/all" )
+                      ( mu4e-sent-folder   . "/barron/sent" )
+                      ( mu4e-drafts-folder . "/barron/drafts" )))
+
+           ,(make-mu4e-context
+             :name "GMail"
+             :enter-func (lambda () (message "Switch to GMail context"))
+             :match-func (lambda (msg)
+                           (when msg
+                             (string-prefix-p "/gmail" (mu4e-message-field msg :maildir))))
+             :vars '( ( user-mail-address  . "scott.a.barron@gmail.com" )
+                      ( user-full-name     . "Scott Barron" )
+                      ( mu4e-trash-folder  . "/gmail/trash" )
+                      ( mu4e-refile-folder . "/gmail/all" )
+                      ( mu4e-sent-folder   . "/gmail/sent" )
+                      ( mu4e-drafts-folder . "/gmail/drafts" )))
+
+           ,(make-mu4e-context
+             :name "GitHub"
+             :enter-func (lambda () (mu4e-message "Switch to GitHub context"))
+             :match-func (lambda (msg)
+                           (when msg
+                             (string-prefix-p "/github" (mu4e-message-field msg :maildir))))
+             :vars '( ( user-mail-address . "rubyist@github.com" )
+                      ( user-full-name    . "Scott Barron" )
+                      ( mu4e-trash-folder . "/github/trash" )
+                      ( mu4e-refile-folder . "/github/all" )
+                      ( mu4e-sent-folder   . "/github/sent" )
+                      ( mu4e-drafts-folder . "/gmail/drafts" )))))
+  (setq mu4e-context-policy 'pick-first)
+  (setq mu4e-change-filenames-when-moving t)
+  (setq mu4e-update-interval 60)
+#+END_SRC
+
 ** org mode
 Org mode is org mode.
 
