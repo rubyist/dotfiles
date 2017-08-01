@@ -336,6 +336,26 @@ org-bullets makes org mode look nice.
     :init
     (setq display-buffer-function 'popwin:display-buffer))
 #+END_SRC
+** projectile
+[[https://github.com/bbatsov/projectile][projectile]] helps navigate to and within projects. This also sets up [[https://github.com/ericdanan/counsel-projectile][counsel-projectile]].
+
+The primary interactions I use here are:
+
+- `C-c p f` - find file in project
+- `C-c p T` - find test file in project
+- `C-c p b` - find buffer in project
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :config
+    (projectile-global-mode)
+    (setq projectile-completion-system 'ivy)
+    (setq projectile-mode-line '(:eval (format " P[%s]" (projectile-project-name)))))
+
+  (use-package counsel-projectile
+    :config
+    (counsel-projectile-on))
+#+END_SRC
 
 ** protobuf
 Mode for working with protocol buffers proto files.
