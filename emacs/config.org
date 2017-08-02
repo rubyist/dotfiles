@@ -131,7 +131,11 @@ This just sets up the general [[https://github.com/auto-complete/auto-complete][
 counsel is used by the swiper package.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package counsel)
+  (use-package counsel
+    :bind
+    (("M-y" . counsel-yank-pop)
+     :map ivy-minibuffer-map
+     ("M-y" . ivy-next-line)))
 #+END_SRC
 
 ** direx
