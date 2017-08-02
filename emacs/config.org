@@ -340,7 +340,9 @@ Org mode is org mode.
 
     (setq org-capture-templates
           '(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
-             "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")))
+             "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
+            ("t" "Todo" entry (file+headline "~/Dropbox/org/todo.org" "Tasks")
+             "* TODO [#A] %?\nSCHDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")))
 
     (defadvice org-capture-finalize
         (after delete-capture-frame activate)
@@ -395,6 +397,15 @@ org-bullets makes org mode look nice.
   (setq org-reveal-mathjax t)
 
   (use-package htmilize)
+#+END_SRC
+
+** org mu4e
+This mode links mu4e and org
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org-mu4e
+    :config
+    (setq org-mu4e-link-query-in-headers-mode nil))
 #+END_SRC
 
 ** projectile
