@@ -140,6 +140,20 @@ counsel is used by the swiper package.
      ("M-y" . ivy-next-line)))
 #+END_SRC
 
+** deft
+[[http://jblevins.org/projects/deft/][deft]] makes it easy to manage and navigate notes files
+
+#+BEGIN_SRC emacs-lisp
+  (use-package deft
+    :init
+    (setq deft-extension "org")
+    (setq deft-extensions '("org"))
+    (setq deft-text-mode 'org-mode)
+    (setq deft-directory "~/Dropbox/org")
+    (setq deft-auto-save-interval 0)
+    (setq deft-recursive t))
+#+END_SRC
+
 ** direx
 [[https://github.com/m2ym/direx-el][direx]] is a general purpose directory/tree package. I use this for go-direx.
 
