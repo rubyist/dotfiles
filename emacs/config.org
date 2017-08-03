@@ -323,6 +323,28 @@ mu4e is part of mu, an email indexing and reading system.
                       ( mu4e-refile-folder . "/github/all" )
                       ( mu4e-sent-folder   . "/github/sent" )
                       ( mu4e-drafts-folder . "/gmail/drafts" )))))
+  (setq mu4e-bookmarks
+        `( ,(make-mu4e-bookmark
+             :name "Unread Messages"
+             :query "flag:unread AND NOT flag:trashed"
+             :key ?u)
+           ,(make-mu4e-bookmark
+             :name "Mention"
+             :query "cc:mention AND NOT flag:trashed AND NOT maildir:/barron/all AND NOT maildir:/github/all"
+             :key ?m)
+           ,(make-mu4e-bookmark
+             :name "Review Requests"
+             :query "cc:review_requested AND NOT flag:trashed AND NOT maildir:/barron/all AND NOT maildir:/github/all"
+             :key ?r)
+           ,(make-mu4e-bookmark
+             :name "Team Mentions"
+             :query "cc:team_mention AND NOT flag:trashed AND NOT maildir:/barron/all AND NOT maildir:/github/all"
+             :key ?t)
+           ,(make-mu4e-bookmark
+             :name "Today's Messages"
+             :query "date:today..now"
+             :key ?n)))
+
   (setq mu4e-context-policy 'pick-first)
   (setq mu4e-change-filenames-when-moving t)
   (setq mu4e-update-interval 60)
