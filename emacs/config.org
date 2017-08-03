@@ -503,4 +503,7 @@ yasnippet provides snippets.
     :diminish yas-minor-mode
     :init
     (yas-global-mode 1))
+
+  (add-to-list 'yas-snippet-dirs "~/.emacs.d/local/yasnippet-go")
+  (yas-reload-all)
 #+END_SRC
