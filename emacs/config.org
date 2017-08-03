@@ -124,6 +124,8 @@ This just sets up the general [[https://github.com/auto-complete/auto-complete][
     :diminish auto-complete-mode
     :init
     (ac-config-default)
+    (setq ac-auto-start nil)
+    (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
     (global-auto-complete-mode t))
 #+END_SRC
 
@@ -177,7 +179,7 @@ I'm not currently using these packages, but they look interesting.
     (add-hook 'go-mode-hook 'setup-go-mode-compile)
     (setenv "GOROOT" "/usr/local/go")
     (setenv "GOPATH" "/home/scott/src/go")
-    (add-hook 'go-mode-hook 'flycheck-mode))
+    (add-hook 'go-mode-hook 'flycheck-mode))    
 
   ;; Run linters on save
   (defun setup-go-mode-compile ()
