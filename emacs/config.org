@@ -151,7 +151,9 @@ counsel is used by the swiper package.
     (setq deft-text-mode 'org-mode)
     (setq deft-directory "~/Dropbox/org")
     (setq deft-auto-save-interval 0)
-    (setq deft-recursive t))
+    (setq deft-recursive t)
+    :bind
+    (("\C-x C-g" . deft-find-file)))
 #+END_SRC
 
 ** direx
