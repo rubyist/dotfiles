@@ -280,6 +280,8 @@ Dependancies:
     #+END_SRC
 
 *** go-impl
+[[https://github.com/syohex/emacs-go-impl][go-impl]] adds impl to emacs.
+
 #+BEGIN_SRC emacs-lisp
   (use-package go-impl
     :config 
