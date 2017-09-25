@@ -3,6 +3,19 @@
 * General Emacs Settings
 This section configures base settings for emacs.
 
+** backup files
+Don't crap ~ files everywhere.
+
+#+BEGIN_SRC emacs-lisp
+  (setq
+   backup-by-copying t
+   backup-directory-alist
+   '(("." . "~/.saves"))
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)
+#+END_SRC
 ** load path
 Packages that are not available through elpa/melpa can be put into
 ~/.emacs.d/local/. This adds that to the emacs loadpath.
@@ -266,6 +279,15 @@ Dependancies:
       (add-hook 'go-mode-hook 'go-guru-hl-identifier-mode)
     #+END_SRC
 
+*** go-impl
+#+BEGIN_SRC emacs-lisp
+  (use-package go-impl
+    :config 
+    (custom-set-variables
+     '(go-impl-aliases-alist '(("hh" . "http.Handler")
+                               ("irw" . "io.ReadWriter")))))
+#+END_SRC
+
 ** magit
 [[https://github.com/magit/magit][magit]] is the best git interface known to humankind.
 
@@ -479,6 +501,21 @@ Mode for working with protocol buffers proto files.
 #+BEGIN_SRC emacs-lisp
   (use-package protobuf-mode)
 #+END_SRC
+
+** rainbow delimiters
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters)
+  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+#+END_SRC
+
+** rjsx mode
+This is dank for doing jsx in react.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package rjsx-mode)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+#+END_SRC
+
 ** swiper
 [[https://github.com/abo-abo/swiper][swiper]] is an ivy-based alternative to isearch.
 
