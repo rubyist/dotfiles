@@ -176,6 +176,18 @@ counsel is used by the swiper package.
   (use-package direx)
 #+END_SRC
 
+** emamux
+[[https://github.com/syohex/emacs-emamux][emamux]] controls tmux from emacs. Most of the funcationality seems to
+be around running emacs from within tmux, which I do not do. However,
+~emamux:send-command~ is very useful for sending commands to a tmux
+session. This can be triggered with ~C-z C-s~.
+
+#+BEGIN_SRC emacs-lisp
+(use-package emamux
+  :config
+  (global-set-key (kbd "C-z") emamux:keymap))
+#+END_SRC
+
 ** flycheck
 [[https://github.com/flycheck/flycheck][flycheck]] is used for syntax checking in various languages.
 

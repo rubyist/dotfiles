@@ -20,7 +20,7 @@
  '(go-impl-aliases-alist (quote (("hh" . "http.Handler") ("irw" . "io.ReadWriter"))))
  '(package-selected-packages
    (quote
-    (ob-restclient restclient ob-http flycheck-gometalinter ox-gfm wsd-mode indicators go-impl htmlize rjsx-mode rainbow-delimiters deft color-theme-sanityinc-tomorrow markdown-mode projectile protobuf-mode noflet magit go-guru undo-tree linum-relative popwin go-add-tags yasnippet flycheck htmilize ox-reveal zenburn-theme which-key use-package try org-edna org-bullets counsel color-theme badger-theme auto-complete ace-window)))
+    (emamux ob-restclient restclient ob-http flycheck-gometalinter ox-gfm wsd-mode indicators go-impl htmlize rjsx-mode rainbow-delimiters deft color-theme-sanityinc-tomorrow markdown-mode projectile protobuf-mode noflet magit go-guru undo-tree linum-relative popwin go-add-tags yasnippet flycheck htmilize ox-reveal zenburn-theme which-key use-package try org-edna org-bullets counsel color-theme badger-theme auto-complete ace-window)))
  '(safe-local-variable-values (quote ((org-src-preserve-indentation . t)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
