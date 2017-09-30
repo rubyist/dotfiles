@@ -206,7 +206,7 @@ I'm not currently using these packages, but they look interesting.
     (setq gofmt-command "goimports")
     (add-hook 'before-save-hook 'gofmt-before-save)
     (add-hook 'go-mode-hook 'setup-go-mode-compile)
-    (setenv "GOROOT" "/usr/local/go")
+    (setenv "GOROOT" "/usr/lib/go")
     (setenv "GOPATH" "/home/scott/src/go")
     (add-hook 'go-mode-hook 'flycheck-mode))    
 
@@ -214,7 +214,7 @@ I'm not currently using these packages, but they look interesting.
   (defun setup-go-mode-compile ()
     (if (not (string-match "go" compile-command))
         (set (make-local-variable 'compile-command)
-             "gometalinter --deadline 10s && go vet")))
+             "gometalinter --deadline 1s && go vet")))
 #+END_SRC
 
 *** auto complete
@@ -395,54 +395,65 @@ mu4e is part of mu, an email indexing and reading system.
 Org mode is org mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package org
-    :config
-    (setq org-directory "~/Dropbox/org")
-    (setq org-default-notes-file (concat org-directory "/notes.org"))
-    (setq org-export-html-postamble nil)
-    (setq org-startup-folded (quote overview))
-    (setq org-startup-indented t)
-    (setq org-file-apps (append '(
-                                  ("\\.pdf\\'" . "evince %s")
-                                  ) org-file-apps ))
+(use-package org
+  :config
+  (setq org-src-preserve-indentation t)
+  (setq org-ditaa-jar-path "/usr/share/java/ditaa/ditaa-0_10.jar")
+  (setq org-confirm-babel-evaluate nil)
+  (setq org-directory "~/Dropbox/org")
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-export-html-postamble nil)
+  (setq org-startup-folded (quote overview))
+  (setq org-startup-indented t)
+  (setq org-file-apps (append '(
+				("\\.pdf\\'" . "evince %s")
+				) org-file-apps ))
 
-    (setq org-capture-templates
-          '(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
-             "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
-            ("t" "Todo" entry (file+headline "~/Dropbox/org/todo.org" "Tasks")
-             "* TODO [#A] %?\nSCHDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")))
+  (setq org-capture-templates
+	'(("a" "Appointment" entry (file "~/Dropbox/org/gcal.org" "Appointments")
+	   "* TODO %?\n:PROPERTIES:\n\n:END:\nDEADLINE: %^T \n %i\n")
+	  ("t" "Todo" entry (file+headline "~/Dropbox/org/todo.org" "Tasks")
+	   "* TODO [#A] %?\nSCHDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")))
 
-    (defadvice org-capture-finalize
-        (after delete-capture-frame activate)
-      "Advise capture-finalize to close the frame"
-      (if (equal "capture" (frame-parameter nil 'name))
-          (delete-frame)))
+  (defadvice org-capture-finalize
+      (after delete-capture-frame activate)
+    "Advise capture-finalize to close the frame"
+    (if (equal "capture" (frame-parameter nil 'name))
+	(delete-frame)))
 
-    (defadvice org-capture-destroy
-        (after delete-capture-frame activate)
-      "Advise catpure-destroy to close the frame"
-      (if (equal "capture" (frame-parameter nil 'name))
-          (delete-frame)))
+  (defadvice org-capture-destroy
+      (after delete-capture-frame activate)
+    "Advise catpure-destroy to close the frame"
+    (if (equal "capture" (frame-parameter nil 'name))
+	(delete-frame)))
 
-    (defadvice org-capture-kill
-        (after delete-capture-frame activate)
-      "Advise capture-kill to close the frame"
-      (if (equal "capture" (frame-parameter nil 'name))
-          (delete-frame)))
+  (defadvice org-capture-kill
+      (after delete-capture-frame activate)
+    "Advise capture-kill to close the frame"
+    (if (equal "capture" (frame-parameter nil 'name))
+	(delete-frame)))
 
-    :bind
-    (("\C-c c" . org-capture)
-     ("\C-c a" . org-agenda)))
+  (eval-after-load "org"
+    '(require 'ox-md nil t))
 
-  (use-package noflet
-    :config
-    (defun make-capture-frame ()
-      "Create a new frame and run org-capture"
-      (interactive)
-      (select-frame-by-name "capture")
-      (delete-other-windows)
-      (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
-        (org-capture))))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((ditaa . t)))
+
+  :bind
+  (("\C-c c" . org-capture)
+   ("\C-c a" . org-agenda)))
+
+(use-package noflet
+  :config
+  (defun make-capture-frame ()
+    "Create a new frame and run org-capture"
+    (interactive)
+    (select-frame-by-name "capture")
+    (delete-other-windows)
+    (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
+      (org-capture))))
+
 #+END_SRC
 
 *** org bullets
@@ -461,19 +472,93 @@ org-bullets makes org mode look nice.
   (use-package ox-reveal
     :ensure ox-reveal)
 
-  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0./")
+  (setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
   (setq org-reveal-mathjax t)
 
   (use-package htmilize)
 #+END_SRC
 
-** org mu4e
+*** org mu4e
 This mode links mu4e and org
 
 #+BEGIN_SRC emacs-lisp
   (use-package org-mu4e
     :config
     (setq org-mu4e-link-query-in-headers-mode nil))
+#+END_SRC
+
+*** ob-http
+[[https://github.com/zweifisch/ob-http][ob-http]] is an org-babel extension that can make HTTP requests and
+stuff the output into RESULTS blocks. Example:
+
+#+BEGIN_SRC http :pretty
+GET https://api.github.com/repos/rubyist/circuitbreaker/languages
+#+END_SRC
+
+#+RESULTS:
+: {
+:   "Go": 43433
+: }
+
+#+BEGIN_SRC emacs-lisp
+(use ob-http)
+#+END_SRC
+
+*** ob-restclient
+[[https://github.com/alf/ob-restclient.el][ob-restclient]] is another org-babel extension that can make HTTP
+requests and stuff the output into RESULT blocks. It uses [[https://github.com/pashky/restclient.el][restclient]]
+which has some extra features ob-http might not have. Example:
+
+#+BEGIN_SRC restclient 
+GET https://api.github.com/repos/rubyist/circuitbreaker/languages
+User-Agent: ob-restclient
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC js
+{
+  "Go": 43433
+}
+// GET https://api.github.com/repos/rubyist/circuitbreaker/languages
+// HTTP/1.1 200 OK
+// Server: GitHub.com
+// Date: Sat, 30 Sep 2017 17:44:06 GMT
+// Content-Type: application/json; charset=utf-8
+// Content-Length: 12
+// Status: 200 OK
+// X-RateLimit-Limit: 60
+// X-RateLimit-Remaining: 56
+// X-RateLimit-Reset: 1506795662
+// Cache-Control: public, max-age=60, s-maxage=60
+// Vary: Accept
+// ETag: "2b4a603b202b37cc0db7bb5f70d8ddcf"
+// Last-Modified: Thu, 28 Sep 2017 09:56:00 GMT
+// X-GitHub-Media-Type: github.v3; format=json
+// Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+// Access-Control-Allow-Origin: *
+// Content-Security-Policy: default-src 'none'
+// Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+// X-Content-Type-Options: nosniff
+// X-Frame-Options: deny
+// X-XSS-Protection: 1; mode=block
+// X-Runtime-rack: 0.024199
+// X-GitHub-Request-Id: C630:279EF:1FAB8B3:51F33F8:59CFD7E6
+// Request duration: 0.261900s
+#+END_SRC
+
+One thing to note here is that ob-restclient does not include a user
+agent header by default. Some things, like the GitHub API, don't like
+that.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ob-restclient)
+#+END_SRC
+
+*** ox-hugo
+
+#+BEGIN_SRC emacs-lisp
+(use-package ox-hugo
+  :after ox)
 #+END_SRC
 
 ** projectile
@@ -508,6 +593,13 @@ Mode for working with protocol buffers proto files.
 #+BEGIN_SRC emacs-lisp
   (use-package rainbow-delimiters)
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+#+END_SRC
+
+** restclient
+[[https://github.com/pashky/restclient.el][restclient]] is a tool for exploring REST APIs from within emacs.
+
+#+BEGIN_SRC emacs-lisp
+(use-package restclient)
 #+END_SRC
 
 ** rjsx mode
@@ -572,6 +664,14 @@ which-key figures out what a key does.
     :diminish which-key-mode
     :config
     (which-key-mode))
+#+END_SRC
+
+** wsd-mode
+[[https://github.com/josteink/wsd-mode][wsd-mode]] is a major mode supporting web sequence diagrams syntax and
+rendering. It also works in org-mode code blocks.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package wsd-mode)
 #+END_SRC
 
 ** yasnippet
