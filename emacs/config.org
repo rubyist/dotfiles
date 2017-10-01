@@ -513,7 +513,7 @@ GET https://api.github.com/repos/rubyist/circuitbreaker/languages
 : }
 
 #+BEGIN_SRC emacs-lisp
-(use ob-http)
+(use-package ob-http)
 #+END_SRC
 
 *** ob-restclient
