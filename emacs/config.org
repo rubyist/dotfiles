@@ -187,6 +187,15 @@ counsel is used by the swiper package.
   (use-package direx)
 #+END_SRC
 
+** elfeed
+[[https://github.com/skeeto/elfeed][elfeed]] is an RSS reader, because google killed RSS.
+
+#+BEGIN_SRC emacs-lisp
+(use-package elfeed
+  :config
+  (global-set-key (kbd "C-x w") 'elfeed))
+#+END_SRC
+
 ** emamux
 [[https://github.com/syohex/emacs-emamux][emamux]] controls tmux from emacs. Most of the funcationality seems to
 be around running emacs from within tmux, which I do not do. However,
@@ -656,10 +665,10 @@ This is dank for doing jsx in react.
 The theme.
 
 #+BEGIN_SRC emacs-lisp
-  ;; (use-package zenburn-theme
-  ;;  :config (load-theme 'zenburn t))
-  (use-package kaolin-theme)
-  ;; (use-package color-theme-sanityinc-tomorrow)  
+(use-package dracula-theme
+:init
+(load-theme 'dracula t)
+:ensure t)
 #+END_SRC
 
 ** try
