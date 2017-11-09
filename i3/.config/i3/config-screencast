@@ -37,13 +37,15 @@ bindsym $mod+Control+5 exec steam
 bindsym $mod+Control+0 exec ~/dotfiles/script/org-capture
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec urxvt
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec rofi -show run
+bindsym $mod+w exec rofi -show window
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -151,10 +153,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink height 5 px or 5 ppt
+        bindsym semicolon resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -176,50 +178,37 @@ bindsym $mod+r mode "resize"
 
 set $bg-color #000000
 set $inactive-bg-color #000000
-set $text-color #257da3
-set $inactive-text-color #253ea3
-set $urgent-bg-color #e53935
+set $text-color #000000
+set $inactive-text-color #000000
+set $urgent-bg-color #000000
+set $focused #000000
 
 # window colors
 #  border background text indicator
-client.focused $bg-color $bg-color $text-color #000000
-client.unfocused $inactive-bg-color $inactive-bg-color $inactive-text-color #000000
+client.focused $focused $focused $focused $focused
+client.unfocused $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
 client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #000000
 client.urgent $urgent-bg-color $urgent-bg-color $text-color #000000
 
-hide_edge_borders smart
+#hide_edge_borders all
 
-gaps inner 20
-gaps outer 15
-for_window [class="^.*"] border pixel 3
+gaps inner 0
+gaps outer 0
+for_window [class="^.*"] border pixel 1
 #smart_gaps on
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        #status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        status_command ~/src/go/src/github.com/rubyist/dankbar/dankbar
-        #status_command i3status --config ~/.config/i3/i3status.conf
-        font pango:DejaVu Sans Mono 13
-        strip_workspace_numbers yes
-        tray_output none
-        colors {
-                background $bg-color
-                focused_workspace $bg-color $bg-color $text-color
-                inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-                urgent_workspace $urgent-bg-color $urgent-bg-color $text-color
-        }
-}
 
-bindsym $mod+shift+x exec i3lock
+bindsym $mod+shift+x exec i3lock -t -i ~/Pictures/background.png
 
 # pa-applet will handle these, uncomment if not using pa-applet
 bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec amixer -q set Master 5%- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
 
+#exec compton -bcCGf --backend glx --vsync opengl-swc -i 0.9 -e 0.9 --no-fading-openclose --sw-opti
 exec ~/dotfiles/script/monitor
 exec xinput set-prop "Clearly Superior Technologies. CST Laser Trackball" 275 1
-exec_always feh --bg-scale ~/Pictures/background.jpg
-
+#exec_always feh --bg-scale ~/Pictures/background.png

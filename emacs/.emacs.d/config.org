@@ -27,7 +27,7 @@ Packages that are not available through elpa/melpa can be put into
 ** pragmata pro font
 
 #+BEGIN_SRC emacs-lisp
-(set-default-font "PragmataPro Mono-13")
+(set-default-font "PragmataPro Mono-16")
 (load "pragmatapro-prettify-symbols")
 (defun pragmata-ligatures ()
   (add-pragmatapro-prettify-symbols-alist)
@@ -101,6 +101,26 @@ This section sets up emacs for using pcakges and bootstraps use-package.
     (package-install 'use-package))
 #+End_SRC
 
+** appearance
+Make emacs transparent
+
+#+BEGIN_SRC emacs-lisp
+; (set-frame-parameter (selected-frame) 'alpha '(85 . 85))
+; (add-to-list 'default-frame-alist '(alpha . (85 . 85)))
+
+(defun toggle-transparency ()
+  (interactive)
+  (let ((alpha (frame-parameter nil 'alpha)))
+    (set-frame-parameter
+     nil 'alpha
+     (if (eql (cond ((numberp alpha) alpha)
+		    ((numberp (cdr alpha)) (cdr alpha))
+		    ((numberp (cadr alpha)) (cadr alpha)))
+	      100)
+	 '(85 . 85) '(100 . 100)))))
+(global-set-key (kbd "C-c t") 'toggle-transparency)
+  
+#+END_SRC
 * Installed Packages
 This section sets up all the various packages, primarily using use-package.
 
@@ -246,7 +266,7 @@ I'm not currently using these packages, but they look interesting.
   (defun setup-go-mode-compile ()
     (if (not (string-match "go" compile-command))
         (set (make-local-variable 'compile-command)
-             "gometalinter --deadline 1s && go vet")))
+             "gometalinter --deadline 1s --disable=vetshadow --disable=gocyclo --disable=maligned --enable=unused --enable=staticcheck")))
 #+END_SRC
 
 *** auto complete
@@ -310,7 +330,7 @@ Dependancies:
       (use-package go-guru)
       (add-hook 'go-mode-hook 'go-guru-hl-identifier-mode)
     #+END_SRC
-
+    
 *** go-impl
 [[https://github.com/syohex/emacs-go-impl][go-impl]] adds impl to emacs.
 
@@ -320,6 +340,13 @@ Dependancies:
     (custom-set-variables
      '(go-impl-aliases-alist '(("hh" . "http.Handler")
                                ("irw" . "io.ReadWriter")))))
+#+END_SRC
+
+** ledger-mode
+#+BEGIN_SRC emacs-lisp
+(use-package ledger-mode
+  :init
+  (setq ledger-clear-whole-transactions 1))
 #+END_SRC
 
 ** magit
@@ -470,7 +497,8 @@ Org mode is org mode.
 
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((ditaa . t)))
+   '((ditaa . t)
+     (ledger . t)))
 
   :bind
   (("\C-c c" . org-capture)
@@ -593,6 +621,18 @@ that.
   :after ox)
 #+END_SRC
 
+** ponylang-mode
+#+BEGIN_SRC emacs-lisp
+(use-package ponylang-mode
+  :config
+  (progn
+    (add-hook
+     'ponylang-mode-hook
+     (lambda ()
+       (set-variable 'indent-tabs-mode nil)
+       (set-variable 'tab-width 2)))))
+#+END_SRC
+
 ** projectile
 [[https://github.com/bbatsov/projectile][projectile]] helps navigate to and within projects. This also sets up [[https://github.com/ericdanan/counsel-projectile][counsel-projectile]].
 
@@ -661,6 +701,13 @@ This is dank for doing jsx in react.
            (:map read-expression-map ("C-r" . counsel-expression-history))))
 #+END_SRC
 
+** telephone-line
+
+#+BEGIN_SRC emacs-lisp
+(use-package telephone-line-mode)
+(telephone-line-mode)
+#+END_SRC
+
 ** theme
 The theme.
 
@@ -718,3 +765,4 @@ yasnippet provides snippets.
   (add-to-list 'yas-snippet-dirs "~/.emacs.d/local/yasnippet-go")
   (yas-reload-all)
 #+END_SRC
+

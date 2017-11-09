@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: mu route
+# key: route
+# --
+mu.${1:Verb}("${2:path}", ${3:handler}),
+$0

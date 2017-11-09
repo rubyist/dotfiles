@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: http handler (method)
+# key: hhm
+# --
+// $2 ${3:...}
+func (${1:target}) ${2:name}(w http.ResponseWriter, r *http.Request) {
+	$0
+}

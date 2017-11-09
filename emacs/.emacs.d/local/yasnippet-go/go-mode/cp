@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: io.Copy
+# key: cp
+# --
+io.Copy(${1:dst}, ${2:src})$0
