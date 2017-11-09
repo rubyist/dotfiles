@@ -252,4 +252,4 @@ bindsym XF86AudioMute exec amixer -q set Master toggle
 exec compton -bcCGf --backend glx --vsync opengl-swc -i 0.98 -e 0.98 --no-fading-openclose --sw-opti
 exec ~/dotfiles/script/monitor
 exec xinput set-prop "Clearly Superior Technologies. CST Laser Trackball" 275 1
-exec_always feh --bg-scale ~/dotfiles/wallpaper/nord-pattern.png
+exec_always feh --bg-scale ~/dotfiles/resources/wallpaper/nord-pattern.png
