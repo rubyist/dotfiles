@@ -1,0 +1,11 @@
+[laptop]
+"mod" = "Mod1"
+"wm-setup" = "/home/scott/dotfiles/script/wm-setup-laptop"
+"gaps-inner" = "35"
+"gaps-outer" = "15"
+
+[desktop]
+"mod" = "Mod4"
+"wm-setup" = "/home/scott/dotfiles/script/wm-setup-desktop"
+"gaps-inner" = "20"
+"gaps-outer" = "15"

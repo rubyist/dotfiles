@@ -8,3 +8,7 @@ for output in $(xrandr | grep "DisplayPort" | sed -e "s/\(DisplayPort-.\).*/\1/"
 done
 
 xcalib -d :0 $HOME/dotfiles/resources/dell.icc
+
+xinput set-prop "Clearly Superior Technologies. CST Laser Trackball" 275 1
+
+compton -b

@@ -46,7 +46,7 @@ Xft*hinting: full
 URxvt.scrollBar: false
 URxvt.font: xft:Pragmata Pro:size=14
 urxvt*perl-ext-common: default,matcher
-urxvt*url-launcher: /usr/bin/chromium
+urxvt*url-launcher: /home/scott/Downloads/firefox/firefox
 urxvt*matcher.button: 1
 
 rofi.color-enabled: true

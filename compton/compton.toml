@@ -1,0 +1,7 @@
+[laptop]
+"shadow-offset-x" = "15"
+"shadow-offset-y" = "15"
+
+[desktop]
+"shadow-offset-x" = "10"
+"shadow-offset-y" = "10"
