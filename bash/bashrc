@@ -5,6 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+export GOPATH=$HOME/src/go
+export PATH=$PATH:$GOPATH/bin
+
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
@@ -20,11 +23,13 @@ if ! shopt -oq posix; then
   fi
 fi
 
-BROWSER=/usr/bin/chromium
-EDITOR=/usr/bin/vim
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+	ssh-agent > ~/.ssh-agent-thing
+fi
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+	eval "$(<~/.ssh-agent-thing)"
+fi
 
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/src/go
-export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
-export WINEDEBUG=-all
+export BROWSER=firefox-developer-edition
+export EDITOR=nvim
 

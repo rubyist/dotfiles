@@ -13,3 +13,11 @@ alias fresh='sudo pacman -Sy; pacman -Qu'
 alias upper='sudo pacman -Syu'
 
 alias steam-wine='wine ~/.wine/drive_c/Program\ Files\ \(x86\)/Steam/Steam.exe >/dev/null 2>&1 &'
+
+alias ghstart="vboxheadless -s github &"
+alias ghstop="vboxmanage controlvm github poweroff"
+
+alias lsvm="vboxmanage list runningvms"
+
+alias vim=nvim
+alias pipes="sh ~/Dropbox/pipes.sh -p 15 -t 3 -r 3000"
