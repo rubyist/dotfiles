@@ -1,0 +1,9 @@
+[laptop]
+"dpi" = "192"
+"browser" = "firefox-developer-edition"
+"font-size" = "pixelsize=32"
+
+[desktop]
+"dpi" = "96"
+"browser" = "/home/scott/Downloads/firefox/firefox"
+"font-size" = "size=14"

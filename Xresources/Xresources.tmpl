@@ -1,0 +1,69 @@
+! special
+*.foreground:   #d3d3d3
+*.background:   #000000
+*.cursorColor:  #d3d3d3
+
+! black
+*.color0:       #201e24
+*.color8:       #837c78
+
+! red
+*.color1:       #2d2b30
+*.color9:       #89827d
+
+! green
+*.color2:       #3f3d40
+*.color10:      #a7a099
+
+! yellow
+*.color3:       #413c3e
+*.color11:      #c2bec1
+
+! blue
+*.color4:       #423e41
+*.color12:      #c3bcb2
+
+! magenta
+*.color5:       #4e4a4b
+*.color13:      #cbc5ba
+
+! cyan
+*.color6:       #6e6765
+*.color14:      #e3ddd2
+
+! white
+*.color7:       #837e81
+*.color15:      #efe8dc
+
+
+Xft*dpi: {{config "dpi"}}
+Xft*autohint: 0
+Xft*lcdfilter: lcddefault
+Xft*hintstyle: hintfull
+Xft*hinting: 1
+Xft*antialias: true
+Xft*rgba: rgb
+
+URxvt.scrollBar: false
+URxvt.font: xft:Pragmata Pro:{{config "font-size"}}
+urxvt*perl-ext-common: default,matcher
+urxvt*url-launcher: {{config "browser"}}
+urxvt*matcher.button: 1
+urxvt*buffered: false
+
+rofi.color-enabled: true
+rofi.color-window: #201e24, #201e24, #201e24
+rofi.color-normal: #201e24, #efe8dc, #201e24, #c2bec1, #4e4a4b
+
+rofi.hide-scrollbar: true
+rofi.separator-style: solid
+rofi.fullscreen: false
+rofi.fixed-num-lines: true
+rofi.bw: 0
+rofi.lines: 10
+rofi.line-margin: 0
+rofi.eh: 1
+rofi.location: 0
+rofi.sidebar-mode: true
+rofi.terminal: urxvt
+rofi.font: IBM\ 3270 20
