@@ -1,3 +1,5 @@
+-include ../dotfiles.mk
+
 install: $(HOME)/.Xresources $(HOME)/dotfiles/Xresources/Xresources
 
 $(HOME)/.Xresources:

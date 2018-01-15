@@ -1,3 +1,5 @@
+-include ../dotfiles.mk
+
 install: $(HOME)/.config/i3 $(HOME)/dotfiles/i3/config
 
 $(HOME)/.config/i3:

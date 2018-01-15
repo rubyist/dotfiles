@@ -1,3 +1,5 @@
+-include ../dotfiles.mk
+
 install: $(HOME)/.config/nvim
 
 $(HOME)/.config/nvim:

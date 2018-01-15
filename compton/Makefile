@@ -1,3 +1,5 @@
+-include ../dotfiles.mk
+
 install: $(HOME)/.config/compton.conf $(HOME)/dotfiles/compton/compton.conf
 
 $(HOME)/.config/compton.conf:
