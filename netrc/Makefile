@@ -4,7 +4,7 @@ install: $(HOME)/.netrc
 
 $(HOME)/.netrc: $(HOME)/dotfiles/netrc/netrc
 	@echo "linking netrc"
-	@ln -s $(HOME)/dotfiles/netrc/netrc $(HOME)/.netrc
+	@ln -sf $(HOME)/dotfiles/netrc/netrc $(HOME)/.netrc
 
 $(HOME)/dotfiles/netrc/netrc:
 	@echo "generating netrc from pass"
