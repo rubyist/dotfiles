@@ -1,6 +1,6 @@
 [user]
-	name = rubyist
-	email = scott.barron@github.com
+	name = Scott Barron
+	email = scott@barron.io
 
 [core]
 	legacyheaders = false
