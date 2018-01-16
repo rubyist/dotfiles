@@ -41,7 +41,7 @@
 
 [color "status"]
 	added = green
-	changed = yellow
+	changed = white
 	untracked = red
 
 [merge]
