@@ -57,3 +57,5 @@ function! QuickfixToggle()
 		let g:quickfix_is_open = 1
 	endif
 endfunction
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
