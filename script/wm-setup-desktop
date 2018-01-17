@@ -11,4 +11,3 @@ xcalib -d :0 $HOME/dotfiles/resources/dell.icc
 
 xinput set-prop "Clearly Superior Technologies. CST Laser Trackball" 275 1
 
-compton -b
