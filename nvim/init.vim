@@ -8,11 +8,11 @@ call minpac#add('andrewradev/splitjoin.vim')
 call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-rhubarb')
+call minpac#add('guns/xterm-color-table.vim')
 
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()
 
-colorscheme citystreets
 set number
 
 let g:go_fmt_command = "goimports"
@@ -40,7 +40,7 @@ nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 
 " Manage vimrc
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 nnoremap <leader>N :setlocal number!<cr>
@@ -58,4 +58,8 @@ function! QuickfixToggle()
 	endif
 endfunction
 
+nnoremap <leader>q :call QuickfixToggle()<cr>
+
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+
+colorscheme citystreets

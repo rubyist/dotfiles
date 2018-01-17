@@ -30,14 +30,15 @@ let g:terminal_color_15 = "#efe8dc"
 highlight LineNr ctermfg=8 ctermbg=NONE
 
 
+
 " Language Base
-highlight Comment     ctermfg=7  ctermbg=NONE
+highlight Comment     ctermfg=7  ctermbg=NONE cterm=NONE
 highlight Conditional ctermfg=12 ctermbg=NONE cterm=bold
-highlight Number      ctermfg=9  ctermbg=NONE
-highlight PreProc     ctermfg=14 ctermbg=NONE
+highlight Number      ctermfg=9  ctermbg=NONE cterm=NONE
+highlight PreProc     ctermfg=14 ctermbg=NONE cterm=NONE
 highlight Statement   ctermfg=12 ctermbg=NONE cterm=bold
-highlight String      ctermfg=10 ctermbg=NONE
-highlight Type        ctermfg=3  ctermbg=NONE
+highlight String      ctermfg=10 ctermbg=NONE cterm=NONE
+highlight Type        ctermfg=3  ctermbg=NONE cterm=NONE
 
 
 " Vim
@@ -45,3 +46,7 @@ highlight vimFgBgAttrib ctermfg=NONE ctermbg=NONE
 highlight vimOption     ctermfg=15   ctermbg=NONE cterm=bold
 
 highlight link vimHiAttrib  vimFgBgAttrib
+
+" Propmpt / Status
+highlight StatusLine ctermbg=2 ctermfg=NONE cterm=NONE
+highlight StatusLineNC ctermbg=0 ctermfg=9 cterm=NONE
