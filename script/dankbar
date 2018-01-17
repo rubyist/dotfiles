@@ -42,7 +42,7 @@ do
 		then
 			status=$(cat "$batStatus")
 			case "$status" in
-				"Charging") bstat="$bstat  ";;
+				"Charging") bstat="$bstat";;
 				*);;
 			esac
 		fi
