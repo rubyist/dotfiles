@@ -1,0 +1,62 @@
+#!/bin/sh
+
+textCol="#d3d3d3"
+wifiupCol="#d3d3d3"
+wifidnCol="#4e4a4b"
+batCapacity="/sys/class/power_supply/BAT0/capacity"
+batStatus="/sys/class/power_supply/BAT0/status"
+
+build_line() {
+	echo "{\"name\":\"$1\",\"full_text\":\"$2\",\"color\":\"$3\",\"separator\":false,\"separator_block_width\":35}"
+}
+
+echo '{"version":1}[[]'
+while true
+do
+	echo -e ",["
+	lines=()
+
+	# Wifi
+	wifi=`iwconfig 2>/dev/null`
+	r='ESSID:([a-zA-Z0-9"/ ]+)'
+	if [[ $wifi =~ $r ]]
+	then
+		case ${BASH_REMATCH[1]} in
+			"off/any  ") lines=(${lines[@]} "$(build_line "wifi" "" "$wifidnCol")");;
+			*) lines=(${lines[@]} "$(build_line "wifi" "" "$wifiupCol")");;
+		esac
+	fi
+
+	# Battery
+	if [ -e "$batCapacity" ]
+	then
+		cap=$(cat "$batCapacity")
+		if [ "$cap" -ge 75 ]; then bstat="";
+		elif [ "$cap" -ge 50]; then bstat="";
+		elif [ "$cap" -ge 25]; then bstat="";
+		elif [ "$cap" -ge 15]; then bstat="";
+		else bstat="" 
+		fi
+
+		if [ -e "$batStatus" ]
+		then
+			status=$(cat "$batStatus")
+			case "$status" in
+				"Charging") bstat="$bstat  ";;
+				*);;
+			esac
+		fi
+
+		lines=(${lines[@]} "$(build_line "battery" "$bstat" "$textCol")")
+	fi
+
+	# Date
+	lines=(${lines[@]} "$(build_line "time" "$(date +"%b %d %H:%M")" "$textCol")")
+
+	out=$(printf ",%s" "${lines[@]}")
+	out=${out:1}
+	echo $out
+
+	echo "]"
+	sleep 5
+done
