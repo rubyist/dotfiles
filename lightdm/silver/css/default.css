@@ -1,0 +1,74 @@
+body {
+    background: url('../img/bg.png') no-repeat center fixed;
+    background-size: cover;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
+* {
+    font-size:24px;
+    line-height: 24px;
+    font-family: monospace;
+    cursor:none;
+}
+
+#wrapper {
+    position: absolute;
+    margin: auto;
+    padding: 10px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 800px;
+    height: 400px;
+    background-color: #000000;
+    border: 3px solid #efe9dc;
+    font-size:24px;
+    color:#d3d3d3;
+}
+
+#terminal {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+
+#stdin {
+    outline:0;
+    border:0;
+    background:transparent;
+    color: #d3d3d3;
+    font-family: monospace;
+}
+
+#stdout {
+    color: #d3d3d3;
+}
+
+#prompt {
+    display:inline-block;
+}
+
+p {
+    margin:0;
+}
+
+.stdout-green {
+    color:#d3d3d3;
+}
+
+.stdout-white {
+    color:#d3d3d3;
+}
+
+.stdout-off-white {
+    color:#c2bec1;
+}
+
+.stdout-red {
+    color:#89827d;
+}
