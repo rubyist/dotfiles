@@ -2,13 +2,12 @@
 
 install: $(HOME)/.netrc
 
-$(HOME)/.netrc: $(HOME)/dotfiles/netrc/netrc
+$(HOME)/.netrc: netrc
 	@echo "linking netrc"
-	@ln -sf $(HOME)/dotfiles/netrc/netrc $(HOME)/.netrc
+	@ln -sf $(HOME)/dotfiles/netrc/netrc $@
 
-$(HOME)/dotfiles/netrc/netrc:
-	@echo "generating netrc from pass"
-	@pass show config/netrc > $(HOME)/dotfiles/netrc/netrc
+netrc:
+	$(call fill-pass,"config/netrc",$@)
 
 update:
 	@echo "storing netrc in pass"

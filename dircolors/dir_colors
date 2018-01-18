@@ -1,0 +1,17 @@
+COLOR tty
+
+TERM ansi
+TERM *color*
+TERM rxvt-unicode-256color
+
+NORMAL 00
+RESET 0
+
+FILE 00
+DIR 01;33
+STICKY 04;30;47
+EXEC 01;32
+OTHER_WRITABLE 01;33;47
+
+.app 01;32
+.exe 01;32
