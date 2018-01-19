@@ -1,39 +1,58 @@
+#define colfg #d3d3d3
+#define colbg #000000
+#define col0  #201e24
+#define col1  #2d2b30
+#define col2  #3f3d40
+#define col3  #413c3e
+#define col4  #423e41
+#define col5  #4e4a4b
+#define col6  #6e6765
+#define col7  #837e81
+#define col8  #837c78
+#define col9  #89827d
+#define col10 #a7a099
+#define col11 #c2bec1
+#define col12 #c3bcb2
+#define col13 #cbc5ba
+#define col14 #e3ddd2
+#define col15 #efe8dc
+
 ! special
-*.foreground:   #d3d3d3
-*.background:   #000000
-*.cursorColor:  #d3d3d3
+*.foreground:   colfg
+*.background:   colbg
+*.cursorColor:  colfg
 
 ! black
-*.color0:       #201e24
-*.color8:       #837c78
+*.color0:       col0
+*.color8:       col8
 
 ! red
-*.color1:       #2d2b30
-*.color9:       #89827d
+*.color1:       col1
+*.color9:       col9
 
 ! green
-*.color2:       #3f3d40
-*.color10:      #a7a099
+*.color2:       col2
+*.color10:      col10
 
 ! yellow
-*.color3:       #413c3e
-*.color11:      #c2bec1
+*.color3:       col3
+*.color11:      col11
 
 ! blue
-*.color4:       #423e41
-*.color12:      #c3bcb2
+*.color4:       col4
+*.color12:      col12
 
 ! magenta
-*.color5:       #4e4a4b
-*.color13:      #cbc5ba
+*.color5:       col5
+*.color13:      col13
 
 ! cyan
-*.color6:       #6e6765
-*.color14:      #e3ddd2
+*.color6:       col6
+*.color14:      col14
 
 ! white
-*.color7:       #837e81
-*.color15:      #efe8dc
+*.color7:       col7
+*.color15:      col15
 
 
 Xft*dpi: {{config "dpi"}}
@@ -52,8 +71,10 @@ urxvt*matcher.button: 1
 urxvt*buffered: false
 
 rofi.color-enabled: true
-rofi.color-window: #201e24, #201e24, #201e24
-rofi.color-normal: #201e24, #efe8dc, #201e24, #c2bec1, #4e4a4b
+! outer background, ???, inner border
+rofi.color-window: colbg, colbg, col0
+! even row, text, odd row, hl row, hl text
+rofi.color-normal: colbg, col14, colbg, col0, colfg
 
 rofi.hide-scrollbar: true
 rofi.separator-style: solid

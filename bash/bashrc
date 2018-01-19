@@ -9,7 +9,6 @@ export GOPATH=$HOME/src/go
 export PATH=$PATH:$GOPATH/bin
 
 alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
 
 if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
@@ -36,4 +35,7 @@ fi
 
 export BROWSER=firefox-developer-edition
 export EDITOR=nvim
+
+export PS1='\[\033[1;37m\]\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;32m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;37m\]@\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;32m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;37m\]$(basename "$(pwd)")\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;32m\]\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[0;37m\] ⦔\[$(tput sgr0)\]\[\033[38;5;15m\] '
+export PS2="\[$(tput sgr0)\]\[\033[0;37m\]⦔\[$(tput sgr0)\]\[\033[38;5;15m\] "
 
