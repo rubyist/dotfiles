@@ -1,0 +1,8 @@
+[Unit]
+Description=Synergy
+
+[Service]
+ExecStart=/usr/bin/synergy --no-tray
+
+[Install]
+WantedBy=default.target
