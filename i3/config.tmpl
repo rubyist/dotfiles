@@ -205,8 +205,8 @@ bindsym XF86AudioRaiseVolume exec pamixer -i 5 -u
 bindsym XF86AudioLowerVolume exec pamixer -d 5 -u
 bindsym XF86AudioMute exec pamixer -t
 
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec xbacklight -inc 3
+bindsym XF86MonBrightnessDown exec xbacklight -dec 3
 
 exec_always feh --bg-scale {{config "wallpaper"}}
 exec xss-lock -- i3lock -n -i {{config "wallpaper"}}
