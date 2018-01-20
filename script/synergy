@@ -1,0 +1,3 @@
+#!/bin/sh
+sleep 1
+exec /usr/bin/synergys -f --no-tray -c /home/scott/dotfiles/synergy/synergy.conf --address :24800
