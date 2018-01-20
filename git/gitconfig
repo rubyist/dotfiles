@@ -50,7 +50,7 @@
 [core]
 	legacyheaders = false
 	autocrlf = input
-	editor = vim
+	editor = nvim
 
 [push]
 	default = simple
