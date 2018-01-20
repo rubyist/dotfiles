@@ -40,6 +40,7 @@ highlight Statement   ctermfg=12 ctermbg=NONE cterm=bold
 highlight String      ctermfg=10 ctermbg=NONE cterm=NONE
 highlight Type        ctermfg=3  ctermbg=NONE cterm=NONE
 highlight Title       ctermfg=15 ctermbg=NONE cterm=bold
+highlight Special     ctermfg=15 ctermbg=NONE cterm=bold
 
 
 " Vim
@@ -55,3 +56,4 @@ highlight StatusLineNC ctermbg=0 ctermfg=9 cterm=NONE
 " Markdown
 highlight markdownLinkText ctermbg=0 ctermfg=15 cterm=NONE
 highlight markdownHeadingDelimiter ctermbg=NONE cterm=NONE ctermfg=11
+
