@@ -38,7 +38,7 @@ highlight Number      ctermfg=9  ctermbg=NONE cterm=NONE
 highlight PreProc     ctermfg=14 ctermbg=NONE cterm=NONE
 highlight Statement   ctermfg=12 ctermbg=NONE cterm=bold
 highlight String      ctermfg=10 ctermbg=NONE cterm=NONE
-highlight Type        ctermfg=3  ctermbg=NONE cterm=NONE
+highlight Type        ctermfg=6  ctermbg=NONE cterm=NONE
 highlight Title       ctermfg=15 ctermbg=NONE cterm=bold
 highlight Special     ctermfg=15 ctermbg=NONE cterm=bold
 
