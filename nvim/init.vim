@@ -44,6 +44,8 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 nnoremap <leader>N :setlocal number!<cr>
 
+nnoremap ; :
+
 let g:quickfix_is_open = 0
 function! QuickfixToggle()
 	if g:quickfix_is_open
