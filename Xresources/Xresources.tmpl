@@ -72,11 +72,16 @@ URxvt.buffered: false
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 
+#define rofibg #000411
+#define rofitxt #66605f
+#define rofihl #83b692
+#define rofibord #83b692
+
 rofi.color-enabled: true
 ! outer background, ???, inner border
-rofi.color-window: colbg, colbg, col0
+rofi.color-window: rofibg, rofibg, rofibord
 ! even row, text, odd row, hl row, hl text
-rofi.color-normal: colbg, col14, colbg, col0, colfg
+rofi.color-normal: rofibg, rofitxt, rofibg, rofihl, rofibg
 
 rofi.hide-scrollbar: true
 rofi.separator-style: solid
