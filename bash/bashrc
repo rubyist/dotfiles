@@ -27,10 +27,10 @@ if ! shopt -oq posix; then
 fi
 
 if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-	ssh-agent > ~/.ssh-agent-thing
+	ssh-agent > ~/.ssh-agent-thing > /dev/null
 fi
 if [[ "$SSH_AGENT_PID" == "" ]]; then
-	eval "$(<~/.ssh-agent-thing)"
+	eval "$(<~/.ssh-agent-thing)" > /dev/null
 fi
 
 export BROWSER=firefox-developer-edition
@@ -39,3 +39,6 @@ export EDITOR=nvim
 export PS1='\[\033[1;37m\]\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;32m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;37m\]@\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;32m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;37m\]$(basename "$(pwd)")\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;32m\]\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[0;37m\] ⦔\[$(tput sgr0)\]\[\033[38;5;15m\] '
 export PS2="\[$(tput sgr0)\]\[\033[0;37m\]⦔\[$(tput sgr0)\]\[\033[38;5;15m\] "
 
+export PS1='\[\033[1;32m\]\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[0;35m\] ⦔\[$(tput sgr0)\]\[\033[38;5;15m\] '
+
+export PS1='\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[0;31m\]$(basename "$(pwd)")\[$(tput sgr0)\]\[\033[38;5;15m\]\[$(tput sgr0)\]\[\033[1;32m\]\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[0;35m\] ⦔\[$(tput sgr0)\]\[\033[38;5;15m\] '
