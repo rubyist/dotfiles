@@ -9,11 +9,14 @@ call minpac#add('ctrlpvim/ctrlp.vim')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-rhubarb')
 call minpac#add('guns/xterm-color-table.vim')
+call minpac#add('w0ng/vim-hybrid')
 
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()
 
-colorscheme citystreets
+set background=dark
+let g:hybrid_custom_term_colors = 1
+colorscheme hybrid
 set number
 
 set laststatus=2
@@ -43,8 +46,6 @@ nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 nnoremap <leader>N :setlocal number!<cr>
-
-nnoremap ; :
 
 let g:quickfix_is_open = 0
 function! QuickfixToggle()
