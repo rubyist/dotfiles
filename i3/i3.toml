@@ -1,8 +1,8 @@
 [laptop]
 "mod" = "Mod1"
 "wm-setup" = "/home/scott/dotfiles/script/wm-setup-laptop"
-"gaps-inner" = "35"
-"gaps-outer" = "15"
+"gaps-inner" = "15"
+"gaps-outer" = "5"
 "wallpaper" = "/home/scott/dotfiles/resources/wallpaper/squares-laptop.png"
 
 [desktop]
